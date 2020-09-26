@@ -54,17 +54,16 @@ int main()
 	Paddle paddle{};
 	Collider collider{ ball, paddle };
 
-	std::vector<std::unique_ptr<Block>> blocks(64);
+	std::vector<std::unique_ptr<Block>> blocks;
+	blocks.reserve(64);
 
 	for (std::size_t i{}; i < 8; ++i)
 	{
 		for (std::size_t j{}; j < 8; ++j)
 		{
-			blocks.emplace_back(
-					new Block{ static_cast<BlockColor>(i),
-							   (j * Block::width) + Block::width / 2,
-							   (i * Block::height) + Block::height / 2 }
-			);
+			blocks.emplace_back(std::make_unique<Block>(static_cast<BlockColor>(i),
+					(j * Block::width) + Block::width / 2,
+					(i * Block::height) + Block::height / 2));
 		}
 	}
 
