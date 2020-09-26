@@ -4,9 +4,13 @@
 #include "block_collider.hpp"
 #include "game.hpp"
 
-/*
+/**
  * SFML Arcanoid-like pixel 2D game.
  * (C) 2020 Karol Szapsza
+ *
+ * @title Arcanoid
+ * @date 2020
+ * @author Karol Szapsza
  *
  * background.png :: https://noobtuts.com/unity/2d-arkanoid-game
  * LICENSE:		public domain

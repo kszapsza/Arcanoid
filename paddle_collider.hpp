@@ -7,6 +7,11 @@
 #include "ball.hpp"
 #include "paddle.hpp"
 
+/**
+ * @brief Ball–paddle collisions class.
+ * Holds references to ball and paddle objects.
+ */
+
 class PaddleCollider
 {
 private:
@@ -18,6 +23,7 @@ public:
 			:ball(ball), paddle(paddle)
 	{
 	}
+
 	void checkForCollision();
 };
 

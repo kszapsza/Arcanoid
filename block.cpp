@@ -4,6 +4,13 @@
 
 #include "block.hpp"
 
+/**
+ * @brief Block constructor.
+ * @param assets An instance of AssetsManager, holding textures. Allows to load textures only once.
+ * @param color BlockColor enumerable type describing desired block color.
+ * @param init_x Initial position in X-axis.
+ * @param init_y Initial position in Y-axis.
+ */
 Block::Block(AssetsManager& assets, const BlockColor color, const float init_x, const float init_y)
 {
 	body = sf::RectangleShape({ Block::width, Block::height });
@@ -42,11 +49,20 @@ Block::Block(AssetsManager& assets, const BlockColor color, const float init_x, 
 	}
 }
 
+/**
+ * @brief sf::Drawable's draw() method override. Draws the object to a render target.
+ * @param target Render target to draw to.
+ * @param states Current render states.
+ */
 void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(body, states);
 }
 
+/**
+ * @brief Gets global bounds of ball's body.
+ * @return Ball's body global bounds in the form of sf::FloatRect.
+ */
 sf::FloatRect Block::getGlobalBounds() const
 {
 	return body.getGlobalBounds();

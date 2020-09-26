@@ -5,6 +5,12 @@
 #include "game.hpp"
 #include <iostream>
 
+/**
+ * @brief Main game class constructor.
+ *
+ * Sets window, window background, UI prompts textures
+ * and properties, prepares gameboard etc.
+ */
 Game::Game()
 {
 	window.setFramerateLimit(60u);
@@ -32,6 +38,9 @@ Game::Game()
 	game_won_info.setPosition(0.0f, 250.0f);
 }
 
+/**
+ * @brief Creates (or re-creates after restart) a vector of blocks ptrs.
+ */
 void Game::createBlocks()
 {
 	blocks.clear();
@@ -48,6 +57,10 @@ void Game::createBlocks()
 	}
 }
 
+/**
+ * @brief Main game update method. Checks win/lose conditions,
+ * draws essential objects, shows UI screens, restarts game etc.
+ */
 void Game::update()
 {
 	if (!game_over && !game_won)

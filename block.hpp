@@ -9,11 +9,22 @@
 
 #include "assets_manager.hpp"
 
+/**
+ * @brief Enumeration type storing possible block colors.
+ */
+
 enum BlockColor : std::uint8_t
 {
 	red = 0, orange = 1, yellow = 2, magenta = 3,
 	pink = 4, green = 5, cyan = 6, purple = 7
 };
+
+/**
+ * @brief Drawable block object.
+ *
+ * Stores body and texture of the block.
+ * Compile-time constant static variables describe object dimensions.
+ */
 
 class Block : public sf::Drawable
 {

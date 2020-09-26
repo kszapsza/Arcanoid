@@ -4,6 +4,10 @@
 
 #include "block_collider.hpp"
 
+/**
+ * @brief Called from game loop, checks for collision between ball and any of the blocks.<br>
+ * At most one block may be removed in one iteration.
+ */
 void BlockCollider::checkForCollision()
 {
 	for (auto it{ blocks.begin() }; it != blocks.end(); ++it)

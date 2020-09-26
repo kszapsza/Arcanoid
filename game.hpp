@@ -18,6 +18,15 @@
 constexpr unsigned int window_width = 480;
 constexpr unsigned int window_height = 700;
 
+/**
+ * @brief Main game class, storing key game data and objects.
+ *
+ * This class intializes and handles game window, assets manager
+ * and all essential game elements, such as: ball, paddle,
+ * vector of blocks pointers, neccessary texture references,
+ * collission classes and game over/won booleans.
+ */
+
 class Game
 {
 private:
@@ -41,7 +50,7 @@ private:
 
 public:
 	sf::RenderWindow window{ sf::VideoMode(window_width, window_height),
-							 "Arcanoid", sf::Style::Close | sf::Style::Titlebar };
+							 "Arcanoid", sf::Style::Close | sf::Style::Titlebar }; // NOLINT(hicpp-signed-bitwise)
 
 	sf::Sprite window_bg;
 	sf::Sprite game_over_info;

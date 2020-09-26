@@ -14,6 +14,12 @@ add_executable(Arcanoid
         paddle_collider.cpp
         paddle_collider.hpp
         block.cpp
-        block.hpp block_collider.cpp block_collider.hpp game.cpp game.hpp assets_manager.cpp assets_manager.hpp)
+        block.hpp
+        block_collider.cpp
+        block_collider.hpp
+        game.cpp
+        game.hpp
+        assets_manager.cpp
+        assets_manager.hpp)
 
 target_link_libraries(Arcanoid sfml-graphics sfml-audio)

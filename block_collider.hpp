@@ -9,6 +9,11 @@
 
 #include <vector>
 
+/**
+ * @brief Ball–block collisions class.
+ * Holds references to ball and vector of block pointers.
+ */
+
 class BlockCollider
 {
 private:
