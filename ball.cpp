@@ -60,7 +60,7 @@ void Ball::update()
 {
 	body.move(velocity);
 
-	if (getLeft() < 0 || getRight() > 512)
+	if (getLeft() < 0 || getRight() > 480)
 		velocity.x *= -1;
 
 	if (getUp() < 0)
@@ -70,7 +70,7 @@ void Ball::update()
 		std::cout << "GAME OVER!\n";
 }
 
-void Ball::bounceUp()
+void Ball::bounce()
 {
 	velocity.y *= -1;
 }

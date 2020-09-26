@@ -2,10 +2,10 @@
 // Created by kszap on 26.09.2020.
 //
 
-#include "collider.hpp"
+#include "paddle_collider.hpp"
 
-void Collider::checkForCollision()
+void PaddleCollider::checkForCollision()
 {
 	if (ball.getGlobalBounds().intersects(paddle.getGlobalBounds()))
-		ball.bounceUp();
+		ball.bounce();
 }

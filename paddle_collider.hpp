@@ -7,14 +7,17 @@
 #include "ball.hpp"
 #include "paddle.hpp"
 
-class Collider
+class PaddleCollider
 {
 private:
 	Ball& ball;
 	Paddle& paddle;
 
 public:
-	Collider (Ball& ball, Paddle& paddle) : ball(ball), paddle(paddle) {}
+	PaddleCollider(Ball& ball, Paddle& paddle)
+			:ball(ball), paddle(paddle)
+	{
+	}
 	void checkForCollision();
 };
 

@@ -23,7 +23,7 @@ void Paddle::moveLeft()
 
 void Paddle::moveRight()
 {
-	if (getRight() < 512)
+	if (getRight() < 480)
 		body.move(move_offset, 0.0f);
 }
 

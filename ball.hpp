@@ -28,7 +28,7 @@ public:
 	sf::FloatRect getGlobalBounds() const;
 
 	void update();
-	void bounceUp();
+	void bounce();
 };
 
 
