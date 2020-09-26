@@ -3,6 +3,7 @@
 //
 
 #include "ball.hpp"
+#include <iostream>
 
 Ball::Ball(const float init_x, const float init_y)
 {
@@ -50,6 +51,11 @@ float Ball::getRight() const
 	return body.getPosition().x + body.getRadius();
 }
 
+sf::FloatRect Ball::getGlobalBounds() const
+{
+	return body.getGlobalBounds();
+}
+
 void Ball::update()
 {
 	body.move(velocity);
@@ -57,6 +63,14 @@ void Ball::update()
 	if (getLeft() < 0 || getRight() > 512)
 		velocity.x *= -1;
 
-	if (getUp() < 0 || getDown() > 700)
+	if (getUp() < 0)
 		velocity.y *= -1;
+
+	if (getDown() > 700)
+		std::cout << "GAME OVER!\n";
+}
+
+void Ball::bounceUp()
+{
+	velocity.y *= -1;
 }

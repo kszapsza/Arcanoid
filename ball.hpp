@@ -25,8 +25,10 @@ public:
 	float getLeft() const;
 	float getDown() const;
 	float getRight() const;
+	sf::FloatRect getGlobalBounds() const;
 
 	void update();
+	void bounceUp();
 };
 
 

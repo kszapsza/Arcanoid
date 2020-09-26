@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "ball.hpp"
+#include "collider.hpp"
 #include "paddle.hpp"
 
 constexpr unsigned int window_width = 512;
@@ -23,12 +24,15 @@ constexpr unsigned int window_height = 700;
  * SOURCE:		https://opengameart.org/content/basic-arkanoid-pack
  * AUTHOR:		Zealex
  * LICENSE:		Attribution 3.0 Unported (CC BY 3.0)
+ *
+ * In order to run the game successfully, including SFML's DLLs in
+ * executable's directory seems required.
  */
 
 int main()
 {
 	sf::RenderWindow window{ sf::VideoMode(window_width, window_height),
-			"Arcanoid", sf::Style::Close | sf::Style::Titlebar };
+							 "Arcanoid", sf::Style::Close | sf::Style::Titlebar };
 	window.setFramerateLimit(60u);
 
 	sf::Texture window_bg_texture;
@@ -42,11 +46,13 @@ int main()
 
 	sf::Sprite window_bg;
 	window_bg.setTexture(window_bg_texture, true);
-	window_bg.setTextureRect({0, 0, window_width, window_height});
+	window_bg.setTextureRect({ 0, 0, window_width, window_height });
 	window_bg.setScale(1.5f, 1.5f);
 
 	Ball ball{ 256.0f, 350.0f };
 	Paddle paddle{};
+
+	Collider collider{ ball, paddle };
 
 	while (window.isOpen())
 	{
@@ -61,6 +67,7 @@ int main()
 
 		paddle.update();
 		ball.update();
+		collider.checkForCollision();
 
 		window.draw(window_bg);
 		window.draw(ball);

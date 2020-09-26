@@ -12,7 +12,7 @@ private:
 	sf::RectangleShape body{};
 	sf::Texture texture{};
 
-	const float move_offset{ 4.0f };
+	const float move_offset{ 5.0f };
 
 	void moveLeft();
 	void moveRight();
@@ -30,6 +30,7 @@ public:
 	float getLeft() const;
 	float getDown() const;
 	float getRight() const;
+	sf::FloatRect getGlobalBounds() const;
 
 	void update();
 };

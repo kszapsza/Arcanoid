@@ -6,12 +6,12 @@
 
 Paddle::Paddle()
 {
-	body = sf::RectangleShape({128.0f, 24.0f});
+	body = sf::RectangleShape({ 96.0f, 24.0f });
 	texture.loadFromFile("..\\assets\\objects.png");
 
 	body.setTexture(&texture);
-	body.setTextureRect(sf::IntRect(152.0f, 80.0f, 128.0f, 24.0f));
-	body.setOrigin(64.0f, 12.0f);
+	body.setTextureRect(sf::IntRect(184.0f, 112.0f, 96.0f, 24.0f));
+	body.setOrigin(48.0f, 12.0f);
 	body.setPosition(256.0f, 688.0f);
 }
 
@@ -27,42 +27,55 @@ void Paddle::moveRight()
 		body.move(move_offset, 0.0f);
 }
 
-void Paddle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Paddle::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
 	target.draw(body, states);
 }
 
-float Paddle::bodyWidth() const {
+float Paddle::bodyWidth() const
+{
 	return body.getLocalBounds().width;
 }
 
-float Paddle::bodyHeight() const {
+float Paddle::bodyHeight() const
+{
 	return body.getLocalBounds().height;
 }
 
-const sf::Vector2f& Paddle::getPosition() const {
+const sf::Vector2f& Paddle::getPosition() const
+{
 	return body.getPosition();
 }
 
-float Paddle::getUp() const {
+float Paddle::getUp() const
+{
 	return body.getPosition().y + bodyHeight() / 2;
 }
 
-float Paddle::getLeft() const {
+float Paddle::getLeft() const
+{
 	return body.getPosition().x - bodyWidth() / 2;
 }
 
-float Paddle::getDown() const {
+float Paddle::getDown() const
+{
 	return body.getPosition().y - bodyHeight() / 2;
 }
 
-float Paddle::getRight() const {
+float Paddle::getRight() const
+{
 	return body.getPosition().x + bodyWidth() / 2;
+}
+
+sf::FloatRect Paddle::getGlobalBounds() const
+{
+	return body.getGlobalBounds();
 }
 
 void Paddle::update()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		moveLeft();
 	}
