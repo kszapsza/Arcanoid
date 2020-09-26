@@ -43,7 +43,7 @@ int main()
 				game.window.close();
 		}
 
-		game.window.clear(sf::Color::Blue);
+		game.window.clear(sf::Color::Black);
 		game.update();
 		game.window.display();
 	}
