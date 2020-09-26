@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
-#include "ball.hpp"
+#include <iostream>
+#include <vector>
+
+#include "block.hpp"
 #include "collider.hpp"
-#include "paddle.hpp"
 
 constexpr unsigned int window_width = 512;
 constexpr unsigned int window_height = 700;
@@ -51,8 +52,21 @@ int main()
 
 	Ball ball{ 256.0f, 350.0f };
 	Paddle paddle{};
-
 	Collider collider{ ball, paddle };
+
+	std::vector<std::unique_ptr<Block>> blocks(64);
+
+	for (std::size_t i{}; i < 8; ++i)
+	{
+		for (std::size_t j{}; j < 8; ++j)
+		{
+			blocks.emplace_back(
+					new Block{ static_cast<BlockColor>(i),
+							   (j * Block::width) + Block::width / 2,
+							   (i * Block::height) + Block::height / 2 }
+			);
+		}
+	}
 
 	while (window.isOpen())
 	{
@@ -72,6 +86,9 @@ int main()
 		window.draw(window_bg);
 		window.draw(ball);
 		window.draw(paddle);
+
+		for (const auto& block : blocks)
+			window.draw(*block);
 
 		window.display();
 	}
