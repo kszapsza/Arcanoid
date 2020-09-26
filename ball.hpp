@@ -14,8 +14,10 @@ private:
 
 	sf::Vector2f velocity{ 4.0f, 4.0f };
 
+	bool out_of_board{};
+
 public:
-	explicit Ball(float init_x = 12.0f, float init_y = 12.0f);
+	explicit Ball(float init_x = 256.0f, float init_y = 350.0f);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	float bodyRadius() const;
@@ -29,6 +31,9 @@ public:
 
 	void update();
 	void bounce();
+	bool outOfBoard();
+
+	void reInitialize(float init_x = 256.0f, float init_y = 350.0f);
 };
 
 

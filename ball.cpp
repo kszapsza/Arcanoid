@@ -67,10 +67,25 @@ void Ball::update()
 		velocity.y *= -1;
 
 	if (getDown() > 700)
-		std::cout << "GAME OVER!\n";
+	{
+		out_of_board = true;
+		velocity = { 0.0f, 0.0f };
+	}
 }
 
 void Ball::bounce()
 {
 	velocity.y *= -1;
+}
+
+bool Ball::outOfBoard()
+{
+	return out_of_board;
+}
+
+void Ball::reInitialize(const float init_x, const float init_y)
+{
+	body.setPosition(init_x, init_y);
+	out_of_board = false;
+	velocity = { 4.0f, 4.0f };
 }

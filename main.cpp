@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>a
+#include <SFML/Graphics.hpp>
 
 #include "block.hpp"
 #include "block_collider.hpp"
@@ -32,6 +32,7 @@ int main()
 	while (game.window.isOpen())
 	{
 		sf::Event evnt{};
+
 		while (game.window.pollEvent(evnt))
 		{
 			if (evnt.type == sf::Event::Closed)

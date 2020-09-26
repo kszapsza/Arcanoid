@@ -5,6 +5,9 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <unordered_map>
+
+#include "assets_manager.hpp"
 
 enum BlockColor : std::uint8_t
 {
@@ -22,7 +25,7 @@ public:
 	static constexpr float width = 48.0f;
 	static constexpr float height = 24.0f;
 
-	explicit Block(BlockColor color, float init_x, float init_y);
+	explicit Block(AssetsManager& assets, BlockColor color, float init_x, float init_y);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	sf::FloatRect getGlobalBounds() const;
 };

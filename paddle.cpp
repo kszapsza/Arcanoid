@@ -86,3 +86,8 @@ void Paddle::update()
 		moveRight();
 	}
 }
+
+void Paddle::reInitialize(const float init_x, const float init_y)
+{
+	body.setPosition(init_x, init_y);
+}

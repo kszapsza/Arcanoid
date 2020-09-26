@@ -4,10 +4,10 @@
 
 #include "block.hpp"
 
-Block::Block(const BlockColor color, const float init_x, const float init_y)
+Block::Block(AssetsManager& assets, const BlockColor color, const float init_x, const float init_y)
 {
 	body = sf::RectangleShape({ Block::width, Block::height });
-	texture.loadFromFile("..\\assets\\objects.png");
+	texture = assets.getTexture("..\\assets\\objects.png");
 
 	body.setOrigin(Block::width / 2.0f, Block::height / 2.0f);
 	body.setPosition(init_x, init_y);

@@ -8,25 +8,40 @@
 Game::Game()
 {
 	window.setFramerateLimit(60u);
-	window_bg_texture.setRepeated(true);
 
-	if (!window_bg_texture.loadFromFile("..\\assets\\background.png"))
-	{
-		std::cerr << "ERROR: Unable to load window background texture!\n";
-		exit(1);
-	}
+	window_bg_texture = assets.getTexture("..\\assets\\background.png");
+	window_bg_texture.setRepeated(true);
 
 	window_bg.setTexture(window_bg_texture, true);
 	window_bg.setTextureRect({ 0, 0, window_width, window_height });
 	window_bg.setScale(1.5f, 1.5f);
 
 	blocks.reserve(80);
+	createBlocks();
+
+	game_over_texture = assets.getTexture("..\\assets\\game_over.png");
+	game_over_texture.setSmooth(false);
+
+	game_over_info.setTexture(game_over_texture);
+	game_over_info.setPosition(0.0f, 250.0f);
+
+	game_won_texture = assets.getTexture("..\\assets\\game_won.png");
+	game_won_texture.setSmooth(false);
+
+	game_won_info.setTexture(game_won_texture);
+	game_won_info.setPosition(0.0f, 250.0f);
+}
+
+void Game::createBlocks()
+{
+	blocks.clear();
+	blocks.reserve(80);
 
 	for (std::size_t i{}; i < 8; ++i)
 	{
 		for (std::size_t j{}; j < 10; ++j)
 		{
-			blocks.emplace_back(std::make_unique<Block>(static_cast<BlockColor>(i),
+			blocks.emplace_back(std::make_unique<Block>(assets, static_cast<BlockColor>(i),
 					(j * Block::width) + Block::width / 2,
 					(i * Block::height) + Block::height / 2));
 		}
@@ -35,15 +50,43 @@ Game::Game()
 
 void Game::update()
 {
-	paddle.update();
-	ball.update();
-	paddle_collider.checkForCollision();
-	block_collider.checkForCollision();
+	if (!game_over && !game_won)
+	{
+		paddle.update();
+		ball.update();
+
+		paddle_collider.checkForCollision();
+		block_collider.checkForCollision();
+	}
 
 	window.draw(window_bg);
 	window.draw(ball);
 	window.draw(paddle);
 
 	for (const auto& block : blocks)
+	{
 		window.draw(*block);
+	}
+
+	if (ball.outOfBoard())
+	{
+		game_over = true;
+		window.draw(game_over_info);
+	}
+	if (blocks.empty())
+	{
+		game_won = true;
+		window.draw(game_won_info);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		createBlocks();
+
+		ball.reInitialize();
+		paddle.reInitialize();
+
+		game_over = false;
+		game_won = false;
+	}
 }

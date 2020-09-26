@@ -33,5 +33,6 @@ public:
 	sf::FloatRect getGlobalBounds() const;
 
 	void update();
+	void reInitialize(float init_x = 256.0f, float init_y = 688.0f);
 };
 

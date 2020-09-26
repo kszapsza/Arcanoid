@@ -6,6 +6,7 @@
 
 #include <SFML\Graphics.hpp>
 
+#include "assets_manager.hpp"
 #include "ball.hpp"
 #include "block.hpp"
 #include "block_collider.hpp"
@@ -20,20 +21,31 @@ constexpr unsigned int window_height = 700;
 class Game
 {
 private:
-	sf::Texture window_bg_texture;
+	AssetsManager assets;
 
-	Ball ball{ 256.0f, 350.0f };
+	Ball ball;
 	Paddle paddle;
 
 	std::vector<std::unique_ptr<Block>> blocks;
+	void createBlocks();
 
 	PaddleCollider paddle_collider{ ball, paddle };
 	BlockCollider block_collider{ ball, blocks };
 
+	sf::Texture window_bg_texture;
+	sf::Texture game_over_texture;
+	sf::Texture game_won_texture;
+
+	bool game_over{ false };
+	bool game_won{ false };
+
 public:
 	sf::RenderWindow window{ sf::VideoMode(window_width, window_height),
 							 "Arcanoid", sf::Style::Close | sf::Style::Titlebar };
+
 	sf::Sprite window_bg;
+	sf::Sprite game_over_info;
+	sf::Sprite game_won_info;
 
 	Game();
 	void update();
