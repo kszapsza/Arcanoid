@@ -28,6 +28,24 @@ void AssetsManager::tryLoad(sf::Texture& dest, const std::string& location)
 }
 
 /**
+ * Internal utility method, which tries to import sound from given destination.
+ * At the moment, logs to standard error stream and shuts down entire game if some
+ * assets was not loaded successfully.
+ *
+ * @param dest A reference to the sound buffer object.
+ * @param location Desired file path.
+ */
+
+void AssetsManager::tryLoad(sf::SoundBuffer& dest, const std::string& location)
+{
+	if (!dest.loadFromFile(location))
+	{
+		std::cerr << "ERROR: Unable to load window background texture!\n";
+		exit(1);
+	}
+}
+
+/**
  * Looks up textures map for desired texture based on its original path. If texture
  * was already loaded (was found in map), returns texture object immediately.
  * Otherwise, tries to load a texture from local disk and stores it in the map for
@@ -50,5 +68,31 @@ sf::Texture& AssetsManager::getTexture(const std::string& path)
 		auto& texture = textures[path];
 		tryLoad(texture, path);
 		return texture;
+	}
+}
+
+/**
+ * Looks up sounds map for desired sound based on its original path. If sound
+ * was already loaded (was found in map), returns sound buffer object immediately.
+ * Otherwise, tries to load a sound from local disk and stores it in the map for
+ * future usage.
+ *
+ * @param path Path to original sound location on disk.
+ * @return Desired sound buffer object reference.
+ */
+
+sf::SoundBuffer& AssetsManager::getSound(const std::string& path)
+{
+	const auto& pair_found = sounds.find(path);
+
+	if (pair_found != sounds.end())
+	{
+		return pair_found->second;
+	}
+	else
+	{
+		auto& sound = sounds[path];
+		tryLoad(sound, path);
+		return sound;
 	}
 }

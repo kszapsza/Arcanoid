@@ -3,6 +3,7 @@
 //
 
 #include "ball.hpp"
+#include "game.hpp"
 
 /**
  * @brief Ball constructor.
@@ -101,24 +102,27 @@ sf::FloatRect Ball::getGlobalBounds() const
 }
 
 /**
+ * @brief Gets out_of_board flag value.
+ * @return Boolean value whether ball is out of play area, or not.
+ */
+[[maybe_unused]] [[nodiscard]]
+bool Ball::outOfBoard() const
+{
+	return out_of_board;
+}
+
+/**
  * @brief Ball's update method.
  *
- * Moves the ball accordingly to the velocity vector, changes
- * the movement direction when bouncing off the walls, stops
- * the ball and sets appropriate flag if it collided with lower
- * border of the board.
+ * Moves the ball accordingly to the velocity vector and
+ * checks whether ball is in play area.
+ * Collisions are controlled by individual colliders classes.
  */
 void Ball::update()
 {
 	body.move(velocity);
 
-	if (getLeft() < 0 || getRight() > 480)
-		velocity.x *= -1;
-
-	if (getUp() < 0)
-		velocity.y *= -1;
-
-	if (getDown() > 700)
+	if (getDown() > Game::window_height)
 	{
 		out_of_board = true;
 		velocity = { 0.0f, 0.0f };
@@ -126,20 +130,19 @@ void Ball::update()
 }
 
 /**
- * @brief Bounces ball in Yaxis when colliding with blocks.
+ * @brief Bounces ball in X-axis when colliding with blocks.
  */
-void Ball::bounce()
+void Ball::bounceX()
 {
-	velocity.y *= -1;
+	velocity.x *= -1;
 }
 
 /**
- * @brief Gets out_of_board flag value.
- * @return Boolean value whether ball is out of play area, or not.
+ * @brief Bounces ball in Y-axis when colliding with blocks.
  */
-bool Ball::outOfBoard()
+void Ball::bounceY()
 {
-	return out_of_board;
+	velocity.y *= -1;
 }
 
 /**

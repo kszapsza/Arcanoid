@@ -37,10 +37,12 @@ public:
 	[[maybe_unused]] [[nodiscard]] float getDown() const;
 	[[maybe_unused]] [[nodiscard]] float getRight() const;
 	[[maybe_unused]] [[nodiscard]] sf::FloatRect getGlobalBounds() const;
+	[[maybe_unused]] [[nodiscard]] bool outOfBoard() const;
 
 	void update();
-	void bounce();
-	bool outOfBoard();
+
+	void bounceX();
+	void bounceY();
 
 	void reInitialize(float init_x = 256.0f, float init_y = 350.0f);
 };

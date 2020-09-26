@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <SFML\Audio.hpp>
+
 #include "ball.hpp"
 #include "block.hpp"
 
@@ -20,12 +22,11 @@ private:
 	Ball& ball;
 	std::vector<std::unique_ptr<Block>>& blocks;
 
-public:
-	BlockCollider(Ball& ball, std::vector<std::unique_ptr<Block>>& blocks)
-			:ball(ball), blocks(blocks)
-	{
-	}
+	sf::SoundBuffer collision_sound_buffer;
+	sf::Sound collision_sound;
 
+public:
+	BlockCollider(AssetsManager& assets, Ball& ball, std::vector<std::unique_ptr<Block>>& blocks);
 	void checkForCollision();
 };
 

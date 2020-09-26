@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 
 #include <map>
 #include <string>
@@ -28,11 +29,16 @@ class AssetsManager
 {
 public:
 	AssetsManager();
+
 	sf::Texture& getTexture(const std::string& path);
+	sf::SoundBuffer& getSound(const std::string& path);
 
 private:
 	static void tryLoad(sf::Texture& dest, const std::string& location);
+	static void tryLoad(sf::SoundBuffer& dest, const std::string& location);
+
 	std::map<std::string, sf::Texture> textures;
+	std::map<std::string, sf::SoundBuffer> sounds;
 };
 
 

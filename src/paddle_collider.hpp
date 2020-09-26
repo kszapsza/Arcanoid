@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <SFML/Audio.hpp>
+
+#include "assets_manager.hpp"
 #include "ball.hpp"
 #include "paddle.hpp"
 
@@ -18,12 +21,11 @@ private:
 	Ball& ball;
 	Paddle& paddle;
 
-public:
-	PaddleCollider(Ball& ball, Paddle& paddle)
-			:ball(ball), paddle(paddle)
-	{
-	}
+	sf::SoundBuffer collision_sound_buffer;
+	sf::Sound collision_sound;
 
+public:
+	PaddleCollider(AssetsManager& assets, Ball& ball, Paddle& paddle);
 	void checkForCollision();
 };
 

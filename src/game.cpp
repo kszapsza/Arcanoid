@@ -36,6 +36,12 @@ Game::Game()
 
 	game_won_info.setTexture(game_won_texture);
 	game_won_info.setPosition(0.0f, 250.0f);
+
+	game_over_sound_buffer = assets.getSound("..\\assets\\game_over.wav");
+	game_over_sound.setBuffer(game_over_sound_buffer);
+
+	game_won_sound_buffer = assets.getSound("..\\assets\\game_won.wav");
+	game_won_sound.setBuffer(game_won_sound_buffer);
 }
 
 /**
@@ -70,6 +76,7 @@ void Game::update()
 
 		paddle_collider.checkForCollision();
 		block_collider.checkForCollision();
+		walls_collider.checkForCollision();
 	}
 
 	window.draw(window_bg);
@@ -85,11 +92,24 @@ void Game::update()
 	{
 		game_over = true;
 		window.draw(game_over_info);
+
+		// Play sound only once after lose.
+		if (!game_result_sound_played)
+			game_over_sound.play();
+
+		game_result_sound_played = true;
 	}
+
 	if (blocks.empty())
 	{
 		game_won = true;
 		window.draw(game_won_info);
+
+		// Play sound only once after win.
+		if (!game_result_sound_played)
+			game_over_sound.play();
+
+		game_result_sound_played = true;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -101,5 +121,6 @@ void Game::update()
 
 		game_over = false;
 		game_won = false;
+		game_result_sound_played = false;
 	}
 }
