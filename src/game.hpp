@@ -45,6 +45,8 @@ private:
 
 	// Textures & sprites
 
+	sf::Image icon;
+
 	sf::Texture window_bg_texture;
 	sf::Texture game_over_texture;
 	sf::Texture game_won_texture;

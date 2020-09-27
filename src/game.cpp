@@ -13,7 +13,10 @@
  */
 Game::Game()
 {
+	AssetsManager::tryLoad(icon, "..\\assets\\icon.png");
+
 	window.setFramerateLimit(60u);
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	window_bg_texture = assets.getTexture("..\\assets\\background.png");
 	window_bg_texture.setRepeated(true);

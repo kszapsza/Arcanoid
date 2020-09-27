@@ -3,47 +3,6 @@
 //
 
 #include "assets_manager.hpp"
-#include <iostream>
-
-AssetsManager::AssetsManager()
-{
-}
-
-/**
- * Internal utility method, which tries to import texture from given destination.
- * At the moment, logs to standard error stream and shuts down entire game if some
- * assets was not loaded successfully.
- *
- * @param dest A reference to the texture object.
- * @param location Desired file path.
- */
-
-void AssetsManager::tryLoad(sf::Texture& dest, const std::string& location)
-{
-	if (!dest.loadFromFile(location))
-	{
-		std::cerr << "ERROR: Unable to load window background texture!\n";
-		exit(1);
-	}
-}
-
-/**
- * Internal utility method, which tries to import sound from given destination.
- * At the moment, logs to standard error stream and shuts down entire game if some
- * assets was not loaded successfully.
- *
- * @param dest A reference to the sound buffer object.
- * @param location Desired file path.
- */
-
-void AssetsManager::tryLoad(sf::SoundBuffer& dest, const std::string& location)
-{
-	if (!dest.loadFromFile(location))
-	{
-		std::cerr << "ERROR: Unable to load window background texture!\n";
-		exit(1);
-	}
-}
 
 /**
  * Looks up textures map for desired texture based on its original path. If texture

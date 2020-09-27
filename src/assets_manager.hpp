@@ -7,8 +7,10 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Audio.hpp>
 
+#include <iostream>
 #include <map>
 #include <string>
+#include <type_traits>
 
 /**
  * @brief Assets management class.
@@ -28,15 +30,30 @@
 class AssetsManager
 {
 public:
-	AssetsManager();
+	AssetsManager() = default;
 
 	sf::Texture& getTexture(const std::string& path);
 	sf::SoundBuffer& getSound(const std::string& path);
 
-private:
-	static void tryLoad(sf::Texture& dest, const std::string& location);
-	static void tryLoad(sf::SoundBuffer& dest, const std::string& location);
+	/**
+	 * Utility method, which tries to import asset from given destination.
+	 * At the moment, logs to standard error stream and shuts down entire
+	 * game if some assets was not loaded successfully.
+	 *
+	 * @param dest A reference to the asset object.
+	 * @param location Desired file path.
+	 */
+	template<typename TAsset>
+	static void tryLoad(TAsset& dest, const std::string& location)
+	{
+		if (!dest.loadFromFile(location))
+		{
+			std::cerr << "ERROR: Unable to load window background texture!\n";
+			exit(1);
+		}
+	}
 
+private:
 	std::map<std::string, sf::Texture> textures;
 	std::map<std::string, sf::SoundBuffer> sounds;
 };
