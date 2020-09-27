@@ -47,10 +47,12 @@ private:
 
 	sf::Image icon;
 
+	sf::Texture splashscreen_texture;
 	sf::Texture window_bg_texture;
 	sf::Texture game_over_texture;
 	sf::Texture game_won_texture;
 
+	sf::Sprite splashscreen;
 	sf::Sprite window_bg;
 	sf::Sprite game_over_info;
 	sf::Sprite game_won_info;
@@ -73,10 +75,13 @@ public:
 	static constexpr unsigned int window_width = 480;
 	static constexpr unsigned int window_height = 700;
 
-	sf::RenderWindow window{ sf::VideoMode(window_width, window_height),
-							 "Arcanoid", sf::Style::Close | sf::Style::Titlebar }; // NOLINT(hicpp-signed-bitwise)
+	sf::RenderWindow window;
 
 	Game();
+
+	void setup();
+	void showSplashscreen();
+
 	void update();
 };
 

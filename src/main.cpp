@@ -42,6 +42,9 @@ int main()
 {
 	Game game{};
 
+	game.showSplashscreen();
+	game.setup();
+
 	while (game.window.isOpen())
 	{
 		sf::Event evnt{};

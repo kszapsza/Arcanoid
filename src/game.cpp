@@ -3,7 +3,9 @@
 //
 
 #include "game.hpp"
-#include <iostream>
+
+#include <chrono>
+#include <thread>
 
 /**
  * @brief Main game class constructor.
@@ -12,12 +14,29 @@
  * and properties, prepares gameboard etc.
  */
 Game::Game()
+		:window(sf::VideoMode(window_width, window_height),
+		"Arcanoid", sf::Style::Close | sf::Style::Titlebar) // NOLINT(hicpp-signed-bitwise)
 {
 	AssetsManager::tryLoad(icon, "..\\assets\\icon.png");
 
 	window.setFramerateLimit(60u);
+	window.setMouseCursorVisible(false);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+}
 
+void Game::showSplashscreen()
+{
+	splashscreen_texture = assets.getTexture("..\\assets\\splashscreen.png");
+	splashscreen_texture.setSmooth(false);
+	splashscreen.setTexture(splashscreen_texture);
+
+	window.draw(splashscreen);
+	window.display();
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+void Game::setup()
+{
 	window_bg_texture = assets.getTexture("..\\assets\\background.png");
 	window_bg_texture.setRepeated(true);
 
@@ -45,6 +64,8 @@ Game::Game()
 
 	game_won_sound_buffer = assets.getSound("..\\assets\\game_won.wav");
 	game_won_sound.setBuffer(game_won_sound_buffer);
+
+	window.clear();
 }
 
 /**
@@ -125,5 +146,9 @@ void Game::update()
 		game_over = false;
 		game_won = false;
 		game_result_sound_played = false;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		exit(0);
 	}
 }
