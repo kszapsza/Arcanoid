@@ -5,6 +5,8 @@ Classic Arcanoid 2D game made with C++ and SFML framework.
 
 To run the game successfully, including SFML's DLLs in executable's directory seems required (see `/dlls` directory).
 
+**Controls:** move paddle with `[A]`/`[D]` or `[<-]`/`[->]` keys, restart after win or lose with `[Space]` key, quit the game with `[Esc]`.
+
 ## Used assets
 * background: https://noobtuts.com/unity/2d-arkanoid-game (public domain),
 * objects: https://opengameart.org/content/basic-arkanoid-pack (CC BY 3.0),
