@@ -2,6 +2,8 @@
 // Created by kszap on 26.09.2020.
 //
 
+#include <random>
+
 #include "ball.hpp"
 #include "game.hpp"
 
@@ -10,7 +12,8 @@
  * @param init_x Initial position in X-axis (default: 240.0f).
  * @param init_y Initial position in Y-axis (default: 350.0f).
  */
-Ball::Ball(const float init_x, const float init_y)
+Ball::Ball(const float min_x, const float max_x, const float min_y, const float max_y)
+		:min_x(min_x), max_x(max_x), min_y(min_y), max_y(max_y), velocity({ 5.5f, 5.5f })
 {
 	body = sf::CircleShape(12.0f);
 	texture.loadFromFile("..\\assets\\objects.png");
@@ -18,7 +21,18 @@ Ball::Ball(const float init_x, const float init_y)
 	body.setTexture(&texture);
 	body.setTextureRect(sf::IntRect(0.0f, 80.0f, 24.0f, 24.0f));
 	body.setOrigin(12.0f, 12.0f);
-	body.setPosition(init_x, init_y);
+	body.setPosition(randomizePosition(min_x, max_x, min_y, max_y));
+}
+
+sf::Vector2f Ball::randomizePosition(const float min_x, const float max_x, const float min_y, const float max_y)
+{
+	std::random_device rd;
+	std::mt19937 mt(rd());
+
+	std::uniform_real_distribution<float> dstrb_x(min_x, max_x);
+	std::uniform_real_distribution<float> dstrb_y(min_y, max_y);
+
+	return sf::Vector2f(dstrb_x(mt), dstrb_y(mt));
 }
 
 /**
@@ -122,7 +136,7 @@ void Ball::update()
 {
 	body.move(velocity);
 
-	if (getDown() > Game::play_area_height)
+	if (getDown() > Game::play_area_height - Paddle::body_height / 4)
 	{
 		out_of_board = true;
 		velocity = { 0.0f, 0.0f };
@@ -151,9 +165,9 @@ void Ball::bounceY()
  * @param init_x Desired initial ball position in X-axis (default: 240.0f).
  * @param init_y Desired initial ball position in Y-axis (default: 350.0f).
  */
-void Ball::reInitialize(const float init_x, const float init_y)
+void Ball::reInitialize()
 {
-	body.setPosition(init_x, init_y);
+	body.setPosition(randomizePosition(min_x, max_x, min_y, max_y));
 	out_of_board = false;
-	velocity = { 4.0f, 4.0f };
+	velocity = { 5.5f, 5.5f };
 }

@@ -16,6 +16,7 @@
 Game::Game()
 		:window(sf::VideoMode(window_width, window_height),
 		"Arcanoid", sf::Style::Close | sf::Style::Titlebar) // NOLINT(hicpp-signed-bitwise)
+		, ball(20.0f, window_width - 20.0f, 360.0f, 500.0f)
 {
 	AssetsManager::tryLoad(icon, "..\\assets\\icon.png");
 
@@ -76,13 +77,15 @@ void Game::createBlocks()
 	blocks.clear();
 	blocks.reserve(80);
 
+	constexpr auto y_offset = 3 * Block::height;
+
 	for (std::size_t i{}; i < 8; ++i)
 	{
 		for (std::size_t j{}; j < 10; ++j)
 		{
 			blocks.emplace_back(std::make_unique<Block>(assets, static_cast<BlockColor>(i),
 					(j * Block::width) + Block::width / 2,
-					(i * Block::height) + Block::height / 2));
+					(i * Block::height) + Block::height / 2 + y_offset));
 		}
 	}
 }
@@ -110,13 +113,10 @@ void Game::update()
 		scoreboard.update(score, highscore);
 	}
 
-	// UI
 	window.draw(window_bg);
-	window.draw(scoreboard);
-
-	// Game objects
 	window.draw(ball);
 	window.draw(paddle);
+	window.draw(scoreboard);
 
 	for (const auto& block : blocks)
 	{
@@ -147,12 +147,15 @@ void Game::update()
 		game_result_sound_played = true;
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if ((game_over || game_won) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		createBlocks();
 
 		ball.reInitialize();
 		paddle.reInitialize();
+
+		game_over_sound.stop();
+		game_won_sound.stop();
 
 		score = 0;
 		game_over = false;

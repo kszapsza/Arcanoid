@@ -80,11 +80,11 @@ private:
 	bool game_result_sound_played{ false };
 
 public:
-	static constexpr unsigned int window_width = 480;
-	static constexpr unsigned int window_height = 780;
+	[[maybe_unused]] static constexpr unsigned int window_width = 480;
+	[[maybe_unused]] static constexpr unsigned int window_height = 780;
 
-	static constexpr unsigned int play_area_width = 480;
-	static constexpr unsigned int play_area_height = 700;
+	[[maybe_unused]] static constexpr unsigned int play_area_width = 480;
+	[[maybe_unused]] static constexpr unsigned int play_area_height = 700;
 
 	sf::RenderWindow window;
 

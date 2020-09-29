@@ -20,7 +20,7 @@ private:
 	sf::RectangleShape body{};
 	sf::Texture texture{};
 
-	const float move_offset{ 5.0f };
+	const float move_offset{ 8.0f };
 
 	void moveLeft();
 	void moveRight();
@@ -30,8 +30,8 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	[[maybe_unused]] [[nodiscard]] float bodyWidth() const;
-	[[maybe_unused]] [[nodiscard]] float bodyHeight() const;
+	[[maybe_unused]] static constexpr float body_width = 96.0f;
+	[[maybe_unused]] static constexpr float body_height = 24.0f;
 
 	[[maybe_unused]] [[nodiscard]] const sf::Vector2f& getPosition() const;
 	[[maybe_unused]] [[nodiscard]] float getUp() const;

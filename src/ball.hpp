@@ -22,11 +22,14 @@ private:
 	sf::CircleShape body{};
 	sf::Texture texture{};
 
-	sf::Vector2f velocity{ 4.0f, 4.0f };
-	bool out_of_board{};
+	sf::Vector2f velocity;
+	bool out_of_board{ false };
+
+	const float min_x, max_x, min_y, max_y;
+	static sf::Vector2f randomizePosition(float min_x, float max_x, float min_y, float max_y);
 
 public:
-	explicit Ball(float init_x = 240.0f, float init_y = 350.0f);
+	explicit Ball(float min_x, float max_x, float min_y, float max_y);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	[[maybe_unused]] [[nodiscard]] float bodyRadius() const;
@@ -44,7 +47,7 @@ public:
 	void bounceX();
 	void bounceY();
 
-	void reInitialize(float init_x = 256.0f, float init_y = 350.0f);
+	void reInitialize();
 };
 
 

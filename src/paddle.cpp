@@ -47,26 +47,6 @@ void Paddle::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 /**
- * @brief Returns paddle's body width.
- * @return Width of paddle's body.
- */
-[[maybe_unused]] [[nodiscard]]
-float Paddle::bodyWidth() const
-{
-	return body.getLocalBounds().width;
-}
-
-/**
- * @brief Returns paddle's body height.
- * @return Height of paddle's body.
- */
-[[maybe_unused]] [[nodiscard]]
-float Paddle::bodyHeight() const
-{
-	return body.getLocalBounds().height;
-}
-
-/**
  * @brief Returns sf::Vector2f representing current paddle position.
  * @return Paddle position in sf::Vector2f form.
  */
@@ -83,7 +63,7 @@ const sf::Vector2f& Paddle::getPosition() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getUp() const
 {
-	return body.getPosition().y + bodyHeight() / 2;
+	return body.getPosition().y + Paddle::body_height / 2;
 }
 
 /**
@@ -93,7 +73,7 @@ float Paddle::getUp() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getLeft() const
 {
-	return body.getPosition().x - bodyWidth() / 2;
+	return body.getPosition().x - Paddle::body_width / 2;
 }
 
 /**
@@ -103,7 +83,7 @@ float Paddle::getLeft() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getDown() const
 {
-	return body.getPosition().y - bodyHeight() / 2;
+	return body.getPosition().y - Paddle::body_height / 2;
 }
 
 /**
@@ -113,7 +93,7 @@ float Paddle::getDown() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getRight() const
 {
-	return body.getPosition().x + bodyWidth() / 2;
+	return body.getPosition().x + Paddle::body_width / 2;
 }
 
 /**
