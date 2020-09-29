@@ -5,8 +5,6 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
-#include <unordered_map>
-
 #include "assets_manager.hpp"
 
 /**

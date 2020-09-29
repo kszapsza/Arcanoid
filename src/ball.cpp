@@ -136,7 +136,7 @@ void Ball::update()
 {
 	body.move(velocity);
 
-	if (getDown() > Game::play_area_height - Paddle::body_height / 4)
+	if (getDown() > Game::play_area_height - Paddle::body_height / 6)
 	{
 		out_of_board = true;
 		velocity = { 0.0f, 0.0f };

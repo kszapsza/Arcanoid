@@ -11,6 +11,7 @@
 #include "ball.hpp"
 #include "block.hpp"
 #include "block_collider.hpp"
+#include "levels_manager.hpp"
 #include "paddle.hpp"
 #include "paddle_collider.hpp"
 #include "scoreboard.hpp"
@@ -34,16 +35,14 @@ private:
 
 	Ball ball;
 	Paddle paddle;
-	std::vector<std::unique_ptr<Block>> blocks;
 
-	void createBlocks();
-
+	LevelsManager levels_manager{ assets };
 	Scoreboard scoreboard{ assets, window_width };
 
 	// COLLISSION CLASSES
 
 	PaddleCollider paddle_collider{ assets, ball, paddle };
-	BlockCollider block_collider{ assets, ball, blocks };
+	BlockCollider block_collider{ assets, ball, levels_manager.blocks };
 	WallsCollider walls_collider{ assets, ball, *this };
 
 	// TEXTURES & SPRITES

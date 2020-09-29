@@ -45,8 +45,7 @@ void Game::setup()
 	window_bg.setTextureRect({ 0, 0, window_width, window_height });
 	window_bg.setScale(1.5f, 1.5f);
 
-	blocks.reserve(80);
-	createBlocks();
+	levels_manager.loadLevel(5);
 
 	game_over_texture = assets.getTexture("..\\assets\\game_over.png");
 	game_over_texture.setSmooth(false);
@@ -67,27 +66,6 @@ void Game::setup()
 	game_won_sound.setBuffer(game_won_sound_buffer);
 
 	window.clear();
-}
-
-/**
- * @brief Creates (or re-creates after restart) a vector of blocks ptrs.
- */
-void Game::createBlocks()
-{
-	blocks.clear();
-	blocks.reserve(80);
-
-	constexpr auto y_offset = 3 * Block::height;
-
-	for (std::size_t i{}; i < 8; ++i)
-	{
-		for (std::size_t j{}; j < 10; ++j)
-		{
-			blocks.emplace_back(std::make_unique<Block>(assets, static_cast<BlockColor>(i),
-					(j * Block::width) + Block::width / 2,
-					(i * Block::height) + Block::height / 2 + y_offset));
-		}
-	}
 }
 
 /**
@@ -118,7 +96,7 @@ void Game::update()
 	window.draw(paddle);
 	window.draw(scoreboard);
 
-	for (const auto& block : blocks)
+	for (const auto& block : levels_manager.blocks)
 	{
 		window.draw(*block);
 	}
@@ -135,7 +113,7 @@ void Game::update()
 		game_result_sound_played = true;
 	}
 
-	if (blocks.empty())
+	if (levels_manager.blocks.empty())
 	{
 		game_won = true;
 		window.draw(game_won_info);
@@ -149,7 +127,7 @@ void Game::update()
 
 	if ((game_over || game_won) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		createBlocks();
+		levels_manager.loadLevel(5);
 
 		ball.reInitialize();
 		paddle.reInitialize();
