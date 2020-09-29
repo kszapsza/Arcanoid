@@ -8,7 +8,7 @@
 #include <SFML\Audio.hpp>
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <type_traits>
 
@@ -54,8 +54,8 @@ public:
 	}
 
 private:
-	std::map<std::string, sf::Texture> textures;
-	std::map<std::string, sf::SoundBuffer> sounds;
+	std::unordered_map<std::string, sf::Texture> textures;
+	std::unordered_map<std::string, sf::SoundBuffer> sounds;
 };
 
 

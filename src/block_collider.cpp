@@ -23,7 +23,10 @@ void BlockCollider::checkForCollision()
 		{
 			ball.bounceY();
 			blocks.erase(it);
-			collision_sound.play();
+
+			if (collision_sound.getStatus() != sf::Sound::Playing)
+				collision_sound.play();
+
 			break;
 		}
 	}

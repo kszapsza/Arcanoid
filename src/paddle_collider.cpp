@@ -20,6 +20,8 @@ void PaddleCollider::checkForCollision()
 	if (ball.getGlobalBounds().intersects(paddle.getGlobalBounds()))
 	{
 		ball.bounceY();
-		collision_sound.play();
+
+		if (collision_sound.getStatus() != sf::Sound::Playing)
+			collision_sound.play();
 	}
 }

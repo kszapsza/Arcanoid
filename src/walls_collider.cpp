@@ -17,11 +17,15 @@ void WallsCollider::checkForCollision()
 	if (ball.getLeft() < 0 || ball.getRight() > Game::window_width)
 	{
 		ball.bounceX();
-		collision_sound.play();
+
+		if (collision_sound.getStatus() != sf::Sound::Playing)
+			collision_sound.play();
 	}
 	if (ball.getUp() < 0)
 	{
 		ball.bounceY();
-		collision_sound.play();
+
+		if (collision_sound.getStatus() != sf::Sound::Playing)
+			collision_sound.play();
 	}
 }
