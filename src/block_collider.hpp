@@ -27,7 +27,7 @@ private:
 
 public:
 	BlockCollider(AssetsManager& assets, Ball& ball, std::vector<std::unique_ptr<Block>>& blocks);
-	void checkForCollision();
+	bool checkForCollision();
 };
 
 

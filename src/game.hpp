@@ -13,6 +13,7 @@
 #include "block_collider.hpp"
 #include "paddle.hpp"
 #include "paddle_collider.hpp"
+#include "scoreboard.hpp"
 #include "walls_collider.hpp"
 
 #include <vector>
@@ -33,17 +34,19 @@ private:
 
 	Ball ball;
 	Paddle paddle;
-
 	std::vector<std::unique_ptr<Block>> blocks;
+
 	void createBlocks();
 
-	// Collission classes
+	Scoreboard scoreboard{ assets, window_width };
+
+	// COLLISSION CLASSES
 
 	PaddleCollider paddle_collider{ assets, ball, paddle };
 	BlockCollider block_collider{ assets, ball, blocks };
 	WallsCollider walls_collider{ assets, ball, *this };
 
-	// Textures & sprites
+	// TEXTURES & SPRITES
 
 	sf::Image icon;
 
@@ -57,7 +60,7 @@ private:
 	sf::Sprite game_over_info;
 	sf::Sprite game_won_info;
 
-	// Sound buffers and sounds
+	// SOUND BUFFERS AND SOUNDS
 
 	sf::SoundBuffer game_over_sound_buffer;
 	sf::SoundBuffer game_won_sound_buffer;
@@ -65,15 +68,23 @@ private:
 	sf::Sound game_over_sound;
 	sf::Sound game_won_sound;
 
-	// Needed to play game over/won sound effect only once in update() loop...
-	bool game_result_sound_played{ false };
+	// GAME DATA
+
+	unsigned int score{};
+	unsigned int highscore{};
 
 	bool game_over{ false };
 	bool game_won{ false };
 
+	// Needed to play game over/won sound effect only once in update() loop...
+	bool game_result_sound_played{ false };
+
 public:
 	static constexpr unsigned int window_width = 480;
-	static constexpr unsigned int window_height = 700;
+	static constexpr unsigned int window_height = 780;
+
+	static constexpr unsigned int play_area_width = 480;
+	static constexpr unsigned int play_area_height = 700;
 
 	sf::RenderWindow window;
 

@@ -122,7 +122,7 @@ void Ball::update()
 {
 	body.move(velocity);
 
-	if (getDown() > Game::window_height)
+	if (getDown() > Game::play_area_height)
 	{
 		out_of_board = true;
 		velocity = { 0.0f, 0.0f };

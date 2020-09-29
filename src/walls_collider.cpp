@@ -14,7 +14,7 @@ WallsCollider::WallsCollider(AssetsManager& assets, Ball& ball, Game& game)
 
 void WallsCollider::checkForCollision()
 {
-	if (ball.getLeft() < 0 || ball.getRight() > Game::window_width)
+	if (ball.getLeft() < 0 || ball.getRight() > Game::play_area_width)
 	{
 		ball.bounceX();
 

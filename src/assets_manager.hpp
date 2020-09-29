@@ -32,8 +32,9 @@ class AssetsManager
 public:
 	AssetsManager() = default;
 
-	sf::Texture& getTexture(const std::string& path);
+	sf::Font& getFont(const std::string& path);
 	sf::SoundBuffer& getSound(const std::string& path);
+	sf::Texture& getTexture(const std::string& path);
 
 	/**
 	 * Utility method, which tries to import asset from given destination.
@@ -54,8 +55,9 @@ public:
 	}
 
 private:
-	std::unordered_map<std::string, sf::Texture> textures;
+	std::unordered_map<std::string, sf::Font> fonts;
 	std::unordered_map<std::string, sf::SoundBuffer> sounds;
+	std::unordered_map<std::string, sf::Texture> textures;
 };
 
 

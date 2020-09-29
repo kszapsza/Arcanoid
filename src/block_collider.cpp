@@ -14,8 +14,10 @@ BlockCollider::BlockCollider(AssetsManager& assets, Ball& ball, std::vector<std:
 /**
  * @brief Called from game loop, checks for collision between ball and any of the blocks.<br>
  * At most one block may be removed in one iteration.
+ *
+ * @return True, if collision was detected.
  */
-void BlockCollider::checkForCollision()
+bool BlockCollider::checkForCollision()
 {
 	for (auto it{ blocks.begin() }; it != blocks.end(); ++it)
 	{
@@ -24,7 +26,9 @@ void BlockCollider::checkForCollision()
 			ball.bounceY();
 			blocks.erase(it);
 			collision_sound.play();
-			break;
+			return true;
 		}
 	}
+
+	return false;
 }

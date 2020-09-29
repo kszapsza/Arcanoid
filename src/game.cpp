@@ -99,11 +99,22 @@ void Game::update()
 		ball.update();
 
 		paddle_collider.checkForCollision();
-		block_collider.checkForCollision();
 		walls_collider.checkForCollision();
+
+		if (block_collider.checkForCollision())
+		{
+			score++;
+			highscore = score > highscore ? score : highscore;
+		}
+
+		scoreboard.update(score, highscore);
 	}
 
+	// UI
 	window.draw(window_bg);
+	window.draw(scoreboard);
+
+	// Game objects
 	window.draw(ball);
 	window.draw(paddle);
 
@@ -143,12 +154,13 @@ void Game::update()
 		ball.reInitialize();
 		paddle.reInitialize();
 
+		score = 0;
 		game_over = false;
 		game_won = false;
 		game_result_sound_played = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
-		exit(0);
+		window.close();
 	}
 }
