@@ -18,13 +18,11 @@ class Scoreboard : public sf::Drawable
 {
 private:
 	sf::RectangleShape body;
-
-	sf::Font karmatic_arcade;
 	sf::Text score_txt;
 	sf::Text highscore_txt;
 
 public:
-	explicit Scoreboard(AssetsManager& assets, float window_width);
+	explicit Scoreboard(const sf::Font& font, float window_width);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void update(unsigned int score, unsigned int highscore);

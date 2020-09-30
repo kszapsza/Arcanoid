@@ -12,6 +12,7 @@
 #include "block.hpp"
 #include "block_collider.hpp"
 #include "levels_manager.hpp"
+#include "message_box.hpp"
 #include "paddle.hpp"
 #include "paddle_collider.hpp"
 #include "scoreboard.hpp"
@@ -37,7 +38,6 @@ private:
 	Paddle paddle;
 
 	LevelsManager levels_manager{ assets };
-	Scoreboard scoreboard{ assets, window_width };
 
 	// COLLISSION CLASSES
 
@@ -48,6 +48,7 @@ private:
 	// TEXTURES & SPRITES
 
 	sf::Image icon;
+	sf::Font karmatic_arcade;
 
 	sf::Texture splashscreen_texture;
 	sf::Texture window_bg_texture;
@@ -59,6 +60,13 @@ private:
 	sf::Sprite game_over_info;
 	sf::Sprite game_won_info;
 
+	// USER INTERFACE
+
+	Scoreboard scoreboard{ karmatic_arcade, window_width };
+
+	MessageBox get_ready_next_lvl{ karmatic_arcade };
+	MessageBox new_highscore{ karmatic_arcade };
+
 	// SOUND BUFFERS AND SOUNDS
 
 	sf::SoundBuffer game_over_sound_buffer;
@@ -69,8 +77,12 @@ private:
 
 	// GAME DATA
 
+	unsigned int previous_attempt_highscore{};
+
 	unsigned int score{};
 	unsigned int highscore{};
+
+	unsigned int level{};
 
 	bool game_over{ false };
 	bool game_won{ false };
@@ -78,14 +90,19 @@ private:
 	// Needed to play game over/won sound effect only once in update() loop...
 	bool game_result_sound_played{ false };
 
+	void levelCompleted();
+	void gameLost();
+
+	void winLoseFreeze();
+
 public:
+	sf::RenderWindow window;
+
 	[[maybe_unused]] static constexpr unsigned int window_width = 480;
 	[[maybe_unused]] static constexpr unsigned int window_height = 780;
 
 	[[maybe_unused]] static constexpr unsigned int play_area_width = 480;
 	[[maybe_unused]] static constexpr unsigned int play_area_height = 700;
-
-	sf::RenderWindow window;
 
 	Game();
 

@@ -4,10 +4,8 @@
 
 #include "scoreboard.hpp"
 
-Scoreboard::Scoreboard(AssetsManager& assets, const float window_width)
+Scoreboard::Scoreboard(const sf::Font& font, const float window_width)
 {
-	karmatic_arcade = assets.getFont("..\\assets\\karmatic_arcade.ttf");
-
 	body.setSize({ window_width, 80.0f });
 	body.setPosition({ 0.0f, 700.0f });
 	body.setFillColor(sf::Color::Black);
@@ -16,13 +14,13 @@ Scoreboard::Scoreboard(AssetsManager& assets, const float window_width)
 	score_txt.setCharacterSize(20);
 	score_txt.setPosition(body.getPosition().x + 10.0f,
 			body.getPosition().y + 12.0f);
-	score_txt.setFont(karmatic_arcade);
+	score_txt.setFont(font);
 	score_txt.setFillColor(sf::Color::White);
 
 	highscore_txt.setCharacterSize(20);
 	highscore_txt.setPosition(body.getPosition().x + body.getSize().x / 2 + 10.0f,
 			body.getPosition().y + 12.0f);
-	highscore_txt.setFont(karmatic_arcade);
+	highscore_txt.setFont(font);
 	highscore_txt.setFillColor(sf::Color::White);
 }
 

@@ -9,12 +9,12 @@
  */
 Paddle::Paddle()
 {
-	body = sf::RectangleShape({ 96.0f, 24.0f });
+	body = sf::RectangleShape({ body_width, body_height });
 	texture.loadFromFile("..\\assets\\objects.png");
 
 	body.setTexture(&texture);
 	body.setTextureRect(sf::IntRect(184.0f, 112.0f, 96.0f, 24.0f));
-	body.setOrigin(48.0f, 12.0f);
+	body.setOrigin(body_width / 2, body_height / 2);
 	body.setPosition(256.0f, 688.0f);
 }
 

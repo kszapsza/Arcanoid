@@ -38,6 +38,11 @@ void Game::showSplashscreen()
 
 void Game::setup()
 {
+	karmatic_arcade = assets.getFont("..\\assets\\karmatic_arcade.ttf");
+
+	get_ready_next_lvl.setString("GET READY FOR NEXT LVL");
+	new_highscore.setString("NEW HIGHSCORE ACHIEVED");
+
 	window_bg_texture = assets.getTexture("..\\assets\\background.png");
 	window_bg_texture.setRepeated(true);
 
@@ -45,7 +50,7 @@ void Game::setup()
 	window_bg.setTextureRect({ 0, 0, window_width, window_height });
 	window_bg.setScale(1.5f, 1.5f);
 
-	levels_manager.loadLevel(5);
+	levels_manager.loadLevel(level);
 
 	game_over_texture = assets.getTexture("..\\assets\\game_over.png");
 	game_over_texture.setSmooth(false);
@@ -74,6 +79,8 @@ void Game::setup()
  */
 void Game::update()
 {
+	// UPDATING OBJECTS
+
 	if (!game_over && !game_won)
 	{
 		paddle.update();
@@ -101,47 +108,105 @@ void Game::update()
 		window.draw(*block);
 	}
 
+	// ENDING SCENARIOS
+
 	if (ball.outOfBoard())
 	{
-		game_over = true;
-		window.draw(game_over_info);
-
-		// Play sound only once after lose.
-		if (!game_result_sound_played)
-			game_over_sound.play();
-
-		game_result_sound_played = true;
+		gameLost();
 	}
 
 	if (levels_manager.blocks.empty())
 	{
-		game_won = true;
-		window.draw(game_won_info);
+		levelCompleted();
+	}
 
-		// Play sound only once after win.
-		if (!game_result_sound_played)
-			game_over_sound.play();
+	// RAGE QUIT
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		window.close();
+	}
+}
+
+/**
+ * @brief Method called if no blocks are present in the play area.
+ * 		  If there are no next levels, displays winscreen.
+ * 		  Otherwise, next level is loaded and started.
+ */
+void Game::levelCompleted()
+{
+	// Play sound only once.
+	if (!game_result_sound_played)
+	{
+		game_won_sound.play();
 		game_result_sound_played = true;
 	}
 
-	if ((game_over || game_won) && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	level++;
+
+	// Load next level, if exists.
+	if (level < levels_manager.levelsAmount())
 	{
-		levels_manager.loadLevel(5);
+		window.draw(get_ready_next_lvl);
+		std::this_thread::sleep_for(std::chrono::seconds(3));
+
+		levels_manager.loadLevel(level);
+		ball.reInitialize();
+		paddle.reInitialize();
+		game_result_sound_played = false;
+	}
+	else
+	{
+		level = 0;
+		game_won = true;
+
+		window.draw(game_won_info);
+		winLoseFreeze();
+	}
+}
+
+void Game::gameLost()
+{
+	game_over = true;
+
+	// Play sound only once.
+	if (!game_result_sound_played)
+	{
+		game_over_sound.play();
+		game_result_sound_played = true;
+	}
+
+	window.draw(game_over_info);
+
+	if (highscore > previous_attempt_highscore)
+	{
+		window.draw(new_highscore);
+	}
+
+	winLoseFreeze();
+}
+
+void Game::winLoseFreeze()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		// Reset current score...
+		score = 0;
+
+		// Game results flags...
+		game_over = false;
+		game_won = false;
+		game_result_sound_played = false;
+
+		previous_attempt_highscore = (highscore > previous_attempt_highscore) ?
+									 highscore : previous_attempt_highscore;
+
+		levels_manager.loadLevel(level);
 
 		ball.reInitialize();
 		paddle.reInitialize();
 
 		game_over_sound.stop();
 		game_won_sound.stop();
-
-		score = 0;
-		game_over = false;
-		game_won = false;
-		game_result_sound_played = false;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		window.close();
 	}
 }

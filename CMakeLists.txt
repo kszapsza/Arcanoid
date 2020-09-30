@@ -20,6 +20,15 @@ add_executable(Arcanoid
         src/game.cpp
         src/game.hpp
         src/assets_manager.cpp
-        src/assets_manager.hpp src/walls_collider.cpp src/walls_collider.hpp src/scoreboard.cpp src/scoreboard.hpp src/levels_manager.cpp src/levels_manager.hpp)
+        src/assets_manager.hpp
+        src/walls_collider.cpp
+        src/walls_collider.hpp
+        src/scoreboard.cpp
+        src/scoreboard.hpp
+        src/levels_manager.cpp
+        src/levels_manager.hpp
+        src/message_box.cpp
+        src/message_box.hpp
+        )
 
 target_link_libraries(Arcanoid sfml-graphics sfml-audio)
