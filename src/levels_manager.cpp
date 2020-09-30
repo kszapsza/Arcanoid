@@ -35,8 +35,11 @@ LevelsManager::LevelsManager(AssetsManager& assets)
 			}
 			else
 			{
-				levels_data.emplace_back(level);
-				level.clear();
+				if (!level.empty())
+				{
+					levels_data.emplace_back(level);
+					level.clear();
+				}
 			}
 		}
 

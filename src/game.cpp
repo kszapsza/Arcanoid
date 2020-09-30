@@ -33,13 +33,14 @@ void Game::showSplashscreen()
 
 	window.draw(splashscreen);
 	window.display();
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1500));
 }
 
 void Game::setup()
 {
 	karmatic_arcade = assets.getFont("..\\assets\\karmatic_arcade.ttf");
 
+	// UI messages content assigment.
 	get_ready_next_lvl.setString("GET READY FOR NEXT LVL");
 	new_highscore.setString("NEW HIGHSCORE ACHIEVED");
 
