@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <SFML\Graphics.hpp>
 #include <SFML\Audio.hpp>
+#include <SFML\Graphics.hpp>
 
 #include "assets_manager.hpp"
 #include "ball.hpp"
@@ -21,6 +21,15 @@
 #include <vector>
 
 /**
+ * @brief Enum describing possible game states. Boolean values such as
+ * 	      game_over, game_won are not needed anymore.
+ */
+enum class GameState : std::uint8_t
+{
+	IN_PROGRESS = 0, GAME_OVER, GAME_WON, NEXT_LVL_DELAY
+};
+
+/**
  * @brief Main game class, storing key game data and objects.
  *
  * This class intializes and handles game window, assets manager
@@ -28,7 +37,6 @@
  * vector of blocks pointers, neccessary texture references,
  * collission classes and game over/won booleans.
  */
-
 class Game
 {
 private:
@@ -39,32 +47,38 @@ private:
 
 	LevelsManager levels_manager{ assets };
 
+	GameState game_state;
+
 	// COLLISSION CLASSES
 
 	PaddleCollider paddle_collider{ assets, ball, paddle };
 	BlockCollider block_collider{ assets, ball, levels_manager.blocks };
 	WallsCollider walls_collider{ assets, ball, *this };
 
-	// TEXTURES & SPRITES
+	// TEXTURES
 
 	sf::Image icon;
 	sf::Font karmatic_arcade;
 
 	sf::Texture splashscreen_texture;
 	sf::Texture window_bg_texture;
+
+	sf::Texture level_completed_texture;
 	sf::Texture game_over_texture;
 	sf::Texture game_won_texture;
 
+	// SPRITES
+
 	sf::Sprite splashscreen;
 	sf::Sprite window_bg;
+
+	sf::Sprite level_completed_info;
 	sf::Sprite game_over_info;
 	sf::Sprite game_won_info;
 
 	// USER INTERFACE
 
 	Scoreboard scoreboard{ karmatic_arcade, window_width };
-
-	MessageBox get_ready_next_lvl{ karmatic_arcade };
 	MessageBox new_highscore{ karmatic_arcade };
 
 	// SOUND BUFFERS AND SOUNDS
@@ -84,9 +98,6 @@ private:
 
 	unsigned int level{};
 
-	bool game_over{ false };
-	bool game_won{ false };
-
 	// Needed to play game over/won sound effect only once in update() loop...
 	bool game_result_sound_played{ false };
 
@@ -94,6 +105,7 @@ private:
 	void gameLost();
 
 	void winLoseFreeze();
+	void levelCompletedFreeze();
 
 public:
 	sf::RenderWindow window;

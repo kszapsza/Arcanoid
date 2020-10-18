@@ -4,8 +4,8 @@
 
 #include "game.hpp"
 
-#include <chrono>
-#include <thread>
+// Debug cheats switch
+#define DEBUG_CHEATS 1
 
 /**
  * @brief Main game class constructor.
@@ -16,7 +16,7 @@
 Game::Game()
 		:window(sf::VideoMode(window_width, window_height),
 		"Arcanoid", sf::Style::Close | sf::Style::Titlebar) // NOLINT(hicpp-signed-bitwise)
-		, ball(20.0f, window_width - 20.0f, 360.0f, 500.0f)
+		, ball(20.0f, window_width - 20.0f, 360.0f, 500.0f), game_state(GameState::IN_PROGRESS)
 {
 	AssetsManager::tryLoad(icon, "..\\assets\\icon.png");
 
@@ -33,7 +33,7 @@ void Game::showSplashscreen()
 
 	window.draw(splashscreen);
 	window.display();
-	std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+	sf::sleep(sf::milliseconds(1500));
 }
 
 void Game::setup()
@@ -41,7 +41,6 @@ void Game::setup()
 	karmatic_arcade = assets.getFont("..\\assets\\karmatic_arcade.ttf");
 
 	// UI messages content assigment.
-	get_ready_next_lvl.setString("GET READY FOR NEXT LVL");
 	new_highscore.setString("NEW HIGHSCORE ACHIEVED");
 
 	window_bg_texture = assets.getTexture("..\\assets\\background.png");
@@ -53,17 +52,29 @@ void Game::setup()
 
 	levels_manager.loadLevel(level);
 
+	// TEXTURES
+
+	level_completed_texture = assets.getTexture("..\\assets\\level_completed.png");
+	level_completed_texture.setSmooth(false);
+
 	game_over_texture = assets.getTexture("..\\assets\\game_over.png");
 	game_over_texture.setSmooth(false);
-
-	game_over_info.setTexture(game_over_texture);
-	game_over_info.setPosition(0.0f, 250.0f);
 
 	game_won_texture = assets.getTexture("..\\assets\\game_won.png");
 	game_won_texture.setSmooth(false);
 
+	// SPRITES
+
+	level_completed_info.setTexture(level_completed_texture);
+	level_completed_info.setPosition(0.0f, 250.0f);
+
+	game_over_info.setTexture(game_over_texture);
+	game_over_info.setPosition(0.0f, 250.0f);
+
 	game_won_info.setTexture(game_won_texture);
 	game_won_info.setPosition(0.0f, 250.0f);
+
+	// SOUNDS
 
 	game_over_sound_buffer = assets.getSound("..\\assets\\game_over.wav");
 	game_over_sound.setBuffer(game_over_sound_buffer);
@@ -82,7 +93,7 @@ void Game::update()
 {
 	// UPDATING OBJECTS
 
-	if (!game_over && !game_won)
+	if (game_state == GameState::IN_PROGRESS)
 	{
 		paddle.update();
 		ball.update();
@@ -98,6 +109,13 @@ void Game::update()
 
 		scoreboard.update(score, highscore);
 	}
+
+#if DEBUG_CHEATS == 1
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
+	{
+		levels_manager.blocks.clear();
+	}
+#endif
 
 	window.draw(window_bg);
 	window.draw(ball);
@@ -143,32 +161,27 @@ void Game::levelCompleted()
 		game_result_sound_played = true;
 	}
 
-	level++;
-
 	// Load next level, if exists.
-	if (level < levels_manager.levelsAmount())
+	if (level + 1 < levels_manager.levelsAmount())
 	{
-		window.draw(get_ready_next_lvl);
-		std::this_thread::sleep_for(std::chrono::seconds(3));
+		game_state = GameState::NEXT_LVL_DELAY;
+		window.draw(level_completed_info);
 
-		levels_manager.loadLevel(level);
-		ball.reInitialize();
-		paddle.reInitialize();
-		game_result_sound_played = false;
+		levelCompletedFreeze();
 	}
+		// Otherwise, player wins.
 	else
 	{
-		level = 0;
-		game_won = true;
-
+		game_state = GameState::GAME_WON;
 		window.draw(game_won_info);
+
 		winLoseFreeze();
 	}
 }
 
 void Game::gameLost()
 {
-	game_over = true;
+	game_state = GameState::GAME_OVER;
 
 	// Play sound only once.
 	if (!game_result_sound_played)
@@ -191,23 +204,44 @@ void Game::winLoseFreeze()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		// Reset current score...
+		// Reset current score and level...
 		score = 0;
+		level = 0;
 
 		// Game results flags...
-		game_over = false;
-		game_won = false;
+		game_state = GameState::IN_PROGRESS;
 		game_result_sound_played = false;
 
 		previous_attempt_highscore = (highscore > previous_attempt_highscore) ?
 									 highscore : previous_attempt_highscore;
 
-		levels_manager.loadLevel(level);
+		levels_manager.loadLevel(0);
 
 		ball.reInitialize();
 		paddle.reInitialize();
 
 		game_over_sound.stop();
+		game_won_sound.stop();
+	}
+}
+
+/**
+ * @brief Screen shown before loading next level. Call if and only if there are
+ * 		  further levels avaiable! Waits for players space press and loads next level.
+ */
+void Game::levelCompletedFreeze()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		level++;
+		levels_manager.loadLevel(level);
+
+		game_state = GameState::IN_PROGRESS;
+
+		ball.reInitialize();
+		paddle.reInitialize();
+
+		game_result_sound_played = false;
 		game_won_sound.stop();
 	}
 }
