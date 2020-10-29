@@ -9,11 +9,13 @@
 
 /**
  * @brief Ball constructor.
- * @param init_x Initial position in X-axis (default: 240.0f).
- * @param init_y Initial position in Y-axis (default: 350.0f).
+ * @param max_x Maximum x position to randomize..
+ * @param min_x Minimum x position to randomize..
+ * @param max_y Maximum y position to randomize..
+ * @param min_y Minimum y position to randomize.
  */
 Ball::Ball(const float min_x, const float max_x, const float min_y, const float max_y)
-		:min_x(min_x), max_x(max_x), min_y(min_y), max_y(max_y), velocity({ 5.5f, 5.5f })
+		: min_x(min_x), max_x(max_x), min_y(min_y), max_y(max_y)
 {
 	body = sf::CircleShape(12.0f);
 	texture.loadFromFile("..\\assets\\objects.png");
@@ -169,5 +171,5 @@ void Ball::reInitialize()
 {
 	body.setPosition(randomizePosition(min_x, max_x, min_y, max_y));
 	out_of_board = false;
-	velocity = { 5.5f, 5.5f };
+	velocity = { init_x_velocity, init_y_velocity };
 }

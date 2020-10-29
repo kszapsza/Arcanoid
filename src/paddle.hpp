@@ -5,7 +5,6 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
-
 /**
  * @brief Drawable, movable paddle object.
  *

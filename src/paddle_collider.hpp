@@ -24,6 +24,8 @@ private:
 	sf::SoundBuffer collision_sound_buffer;
 	sf::Sound collision_sound;
 
+	bool did_bounce{ false };
+
 public:
 	PaddleCollider(AssetsManager& assets, Ball& ball, Paddle& paddle);
 	void checkForCollision();

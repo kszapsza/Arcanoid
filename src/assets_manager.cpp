@@ -6,7 +6,7 @@
  * Following methods look up assets map for desired font/sound/texture, based on
  * its original path. If an asset was already loaded (was found in map), returns
  * asset object immediately. Otherwise, tries to load the asset from local disk
- * and stores it in the map forfuture usage.
+ * and stores it in the map for future usage.
  */
 
 #include "assets_manager.hpp"

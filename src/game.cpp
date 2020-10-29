@@ -14,7 +14,7 @@
  * and properties, prepares gameboard etc.
  */
 Game::Game()
-		:window(sf::VideoMode(window_width, window_height),
+		: window(sf::VideoMode(window_width, window_height),
 		"Arcanoid", sf::Style::Close | sf::Style::Titlebar) // NOLINT(hicpp-signed-bitwise)
 		, ball(20.0f, window_width - 20.0f, 360.0f, 500.0f), game_state(GameState::IN_PROGRESS)
 {

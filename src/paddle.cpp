@@ -24,7 +24,9 @@ Paddle::Paddle()
 void Paddle::moveLeft()
 {
 	if (getLeft() > 0)
+	{
 		body.move(-move_offset, 0.0f);
+	}
 }
 
 /**
@@ -33,7 +35,9 @@ void Paddle::moveLeft()
 void Paddle::moveRight()
 {
 	if (getRight() < 480)
+	{
 		body.move(move_offset, 0.0f);
+	}
 }
 
 /**
@@ -116,13 +120,13 @@ sf::FloatRect Paddle::getGlobalBounds() const
 void Paddle::update()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		moveLeft();
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		moveRight();
 	}
