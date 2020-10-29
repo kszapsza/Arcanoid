@@ -20,6 +20,7 @@ void PaddleCollider::checkForCollision()
 	const auto ball_box = ball.getGlobalBounds();
 	const auto paddle_box = paddle.getGlobalBounds();
 
+	// Bounce if ball and paddle intersect, but only once (set did_bounce flag)
 	if (ball_box.intersects(paddle_box) && !did_bounce)
 	{
 		ball.bounceY();
@@ -29,8 +30,12 @@ void PaddleCollider::checkForCollision()
 			collision_sound.play();
 	}
 
+	// If ball bounced out of the paddle, reset the flag.
 	if (!ball_box.intersects(paddle_box))
 	{
 		did_bounce = false;
 	}
+
+	// This prevents ball to glitch, if on the next frame after bounce, ball
+	// still intersects the paddle (occured frequently at some angles).
 }
