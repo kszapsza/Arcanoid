@@ -111,7 +111,7 @@ void Game::update()
 	}
 
 #if DEBUG_CHEATS == 1
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F10))
 	{
 		levels_manager.blocks.clear();
 	}

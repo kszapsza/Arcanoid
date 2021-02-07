@@ -24,8 +24,8 @@ private:
 
 	const float min_x, max_x, min_y, max_y;
 
-	static constexpr float init_x_velocity = 2.5f;
-	static constexpr float init_y_velocity = 2.5f;
+	static constexpr float init_x_velocity = 4.5f;
+	static constexpr float init_y_velocity = 4.5f;
 	sf::Vector2f velocity{ init_x_velocity, init_y_velocity };
 
 	bool out_of_board{ false };
@@ -47,11 +47,8 @@ public:
 	[[maybe_unused]] [[nodiscard]] bool outOfBoard() const;
 
 	void update();
-
 	void bounceX();
-
 	void bounceY();
-
 	void reInitialize();
 };
 
