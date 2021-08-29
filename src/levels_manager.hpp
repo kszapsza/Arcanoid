@@ -19,22 +19,22 @@ class LevelsManager
 private:
 	AssetsManager& assets;
 
-	const std::unordered_map<char, BlockColor> color_mapping{
-			{ 'B', purple }, { 'C', cyan }, { 'G', green },
-			{ 'P', pink }, { 'M', magenta }, { 'Y', yellow },
-			{ 'O', orange }, { 'R', red }
+	const std::unordered_map<char, BlockColor> colorMapping{
+			{ 'B', PURPLE }, { 'C', CYAN }, { 'G', GREEN },
+			{ 'P', PINK }, { 'M', MAGENTA }, { 'Y', YELLOW },
+			{ 'O', ORANGE }, { 'R', RED }
 	};
 
-	std::vector<std::string> levels_data;
+	std::vector<std::string> levelsData;
 	std::vector<std::unique_ptr<Block>> blocks;
 
-	bool block_color_matters{ false };
+	bool blockColorMatters{ false };
 
 public:
 	friend class Game;
 
 	explicit LevelsManager(AssetsManager& assets);
-	void loadLevel(unsigned int level_index);
+	void loadLevel(unsigned int levelIndex);
 
 	[[nodiscard]] std::size_t levelsAmount() const;
 };

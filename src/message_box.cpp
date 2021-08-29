@@ -10,12 +10,12 @@
  * @param target Render target to draw to.
  */
 MessageBox::MessageBox(const sf::Font& font, const std::string& message, MessageSeverity severity)
-		:message(message), severity(severity)
+		: message(message), severity(severity)
 {
 	text.setFont(font);
 	text.setCharacterSize(20u);
 
-	text.setFillColor(color_mapping.at(severity));
+	text.setFillColor(colorMapping.at(severity));
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(2.0f);
 	text.setStyle(sf::Text::Regular);
@@ -49,8 +49,8 @@ void MessageBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void MessageBox::alignCenter()
 {
-	const auto x_position = (float(Game::window_width) - text.getGlobalBounds().width) / 2.0f;
-	const auto y_position = (float(Game::window_height) - text.getGlobalBounds().height) / 2.0f + 128.0f;
+	const auto xPosition = (float(Game::WINDOW_WIDTH) - text.getGlobalBounds().width) / 2.0f;
+	const auto yPosition = (float(Game::WINDOW_HEIGHT) - text.getGlobalBounds().height) / 2.0f + 128.0f;
 
-	text.setPosition(x_position, y_position);
+	text.setPosition(xPosition, yPosition);
 }

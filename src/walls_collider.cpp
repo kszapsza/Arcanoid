@@ -6,26 +6,26 @@
 #include "walls_collider.hpp"
 
 WallsCollider::WallsCollider(AssetsManager& assets, Ball& ball, Game& game)
-		:ball(ball), game(game)
+		: ball(ball), game(game)
 {
-	collision_sound_buffer = assets.getSound("..\\assets\\wall_bounce.wav");
-	collision_sound.setBuffer(collision_sound_buffer);
+	collisionSoundBuffer = assets.getSound("..\\assets\\wall_bounce.wav");
+	collisionSound.setBuffer(collisionSoundBuffer);
 }
 
 void WallsCollider::checkForCollision()
 {
-	if (ball.getLeft() < 0 || ball.getRight() > Game::play_area_width)
+	if (ball.getLeft() < 0 || ball.getRight() > Game::PLAY_AREA_WIDTH)
 	{
 		ball.bounceX();
 
-		if (collision_sound.getStatus() != sf::Sound::Playing)
-			collision_sound.play();
+		if (collisionSound.getStatus() != sf::Sound::Playing)
+			collisionSound.play();
 	}
 	if (ball.getUp() < 0)
 	{
 		ball.bounceY();
 
-		if (collision_sound.getStatus() != sf::Sound::Playing)
-			collision_sound.play();
+		if (collisionSound.getStatus() != sf::Sound::Playing)
+			collisionSound.play();
 	}
 }

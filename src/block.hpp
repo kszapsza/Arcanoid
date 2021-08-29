@@ -13,8 +13,8 @@
 
 enum BlockColor : std::uint8_t
 {
-	red = 0, orange = 1, yellow = 2, magenta = 3,
-	pink = 4, green = 5, cyan = 6, purple = 7
+	RED = 0, ORANGE = 1, YELLOW = 2, MAGENTA = 3,
+	PINK = 4, GREEN = 5, CYAN = 6, PURPLE = 7
 };
 
 /**
@@ -34,7 +34,7 @@ public:
 	static constexpr float width = 48.0f;
 	static constexpr float height = 24.0f;
 
-	explicit Block(AssetsManager& assets, BlockColor color, float init_x, float init_y);
+	explicit Block(AssetsManager& assets, BlockColor color, float initX, float initY);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	sf::FloatRect getGlobalBounds() const;
 };

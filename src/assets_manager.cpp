@@ -18,11 +18,9 @@
 
 sf::Font& AssetsManager::getFont(const std::string& path)
 {
-	const auto& pair_found = fonts.find(path);
-
-	if (pair_found != fonts.end())
+	if (const auto& pairFound = fonts.find(path); pairFound != fonts.end())
 	{
-		return pair_found->second;
+		return pairFound->second;
 	}
 	else
 	{
@@ -39,15 +37,15 @@ sf::Font& AssetsManager::getFont(const std::string& path)
 
 sf::SoundBuffer& AssetsManager::getSound(const std::string& path)
 {
-	const auto& pair_found = sounds.find(path);
+	const auto& pairFound = sounds.find(path);
 
-	if (pair_found != sounds.end())
+	if (pairFound != sounds.end())
 	{
-		return pair_found->second;
+		return pairFound->second;
 	}
 	else
 	{
-		auto& sound = sounds[path];
+		sf::SoundBuffer& sound = sounds[path];
 		tryLoad(sound, path);
 		return sound;
 	}
@@ -60,11 +58,11 @@ sf::SoundBuffer& AssetsManager::getSound(const std::string& path)
 
 sf::Texture& AssetsManager::getTexture(const std::string& path)
 {
-	const auto& pair_found = textures.find(path);
+	const auto& pairFound = textures.find(path);
 
-	if (pair_found != textures.end())
+	if (pairFound != textures.end())
 	{
-		return pair_found->second;
+		return pairFound->second;
 	}
 	else
 	{

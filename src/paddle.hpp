@@ -5,6 +5,7 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+
 /**
  * @brief Drawable, movable paddle object.
  *
@@ -19,7 +20,7 @@ private:
 	sf::RectangleShape body{};
 	sf::Texture texture{};
 
-	const float move_offset{ 8.0f };
+	const float moveOffset{ 8.0f };
 
 	void moveLeft();
 	void moveRight();
@@ -29,8 +30,8 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	[[maybe_unused]] static constexpr float body_width = 96.0f;
-	[[maybe_unused]] static constexpr float body_height = 24.0f;
+	[[maybe_unused]] static constexpr float BODY_WIDTH = 96.0f;
+	[[maybe_unused]] static constexpr float BODY_HEIGHT = 24.0f;
 
 	[[maybe_unused]] [[nodiscard]] const sf::Vector2f& getPosition() const;
 	[[maybe_unused]] [[nodiscard]] float getUp() const;
@@ -40,6 +41,6 @@ public:
 	[[maybe_unused]] [[nodiscard]] sf::FloatRect getGlobalBounds() const;
 
 	void update();
-	void reInitialize(float init_x = 256.0f, float init_y = 688.0f);
+	void reInitialize(float initX = 256.0f, float initY = 688.0f);
 };
 

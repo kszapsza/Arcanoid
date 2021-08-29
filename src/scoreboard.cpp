@@ -4,9 +4,9 @@
 
 #include "scoreboard.hpp"
 
-Scoreboard::Scoreboard(const sf::Font& font, const float window_width)
+Scoreboard::Scoreboard(const sf::Font& font, const float windowWidth)
 {
-	body.setSize({ window_width, 80.0f });
+	body.setSize({ windowWidth, 80.0f });
 	body.setPosition({ 0.0f, 700.0f });
 	body.setFillColor(sf::Color::Black);
 	body.setOutlineColor(sf::Color::White);

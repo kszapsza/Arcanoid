@@ -16,8 +16,8 @@ private:
 	Ball& ball;
 	Game& game;
 
-	sf::SoundBuffer collision_sound_buffer;
-	sf::Sound collision_sound;
+	sf::SoundBuffer collisionSoundBuffer;
+	sf::Sound collisionSound;
 
 public:
 	WallsCollider(AssetsManager& assets, Ball& ball, Game& game);

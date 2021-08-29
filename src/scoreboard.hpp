@@ -22,7 +22,7 @@ private:
 	sf::Text highscore_txt;
 
 public:
-	explicit Scoreboard(const sf::Font& font, float window_width);
+	explicit Scoreboard(const sf::Font& font, float windowWidth);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void update(unsigned int score, unsigned int highscore);

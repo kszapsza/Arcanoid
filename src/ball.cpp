@@ -9,13 +9,13 @@
 
 /**
  * @brief Ball constructor.
- * @param max_x Maximum x position to randomize..
- * @param min_x Minimum x position to randomize..
- * @param max_y Maximum y position to randomize..
- * @param min_y Minimum y position to randomize.
+ * @param maxX Maximum x position to randomize..
+ * @param minX Minimum x position to randomize..
+ * @param maxY Maximum y position to randomize..
+ * @param minY Minimum y position to randomize.
  */
-Ball::Ball(const float min_x, const float max_x, const float min_y, const float max_y)
-		: min_x(min_x), max_x(max_x), min_y(min_y), max_y(max_y)
+Ball::Ball(const float minX, const float maxX, const float minY, const float maxY)
+		: minX(minX), maxX(maxX), minY(minY), maxY(maxY)
 {
 	body = sf::CircleShape(12.0f);
 	texture.loadFromFile("..\\assets\\objects.png");
@@ -23,18 +23,18 @@ Ball::Ball(const float min_x, const float max_x, const float min_y, const float 
 	body.setTexture(&texture);
 	body.setTextureRect(sf::IntRect(0.0f, 80.0f, 24.0f, 24.0f));
 	body.setOrigin(12.0f, 12.0f);
-	body.setPosition(randomizePosition(min_x, max_x, min_y, max_y));
+	body.setPosition(randomizePosition(minX, maxX, minY, maxY));
 }
 
-sf::Vector2f Ball::randomizePosition(const float min_x, const float max_x, const float min_y, const float max_y)
+sf::Vector2f Ball::randomizePosition(const float minX, const float maxX, const float minY, const float maxY)
 {
 	std::random_device rd;
 	std::mt19937 mt(rd());
 
-	std::uniform_real_distribution<float> dstrb_x(min_x, max_x);
-	std::uniform_real_distribution<float> dstrb_y(min_y, max_y);
+	std::uniform_real_distribution<float> distributionX(minX, maxX);
+	std::uniform_real_distribution<float> distributionY(minY, maxY);
 
-	return sf::Vector2f(dstrb_x(mt), dstrb_y(mt));
+	return { distributionX(mt), distributionY(mt) };
 }
 
 /**
@@ -118,13 +118,13 @@ sf::FloatRect Ball::getGlobalBounds() const
 }
 
 /**
- * @brief Gets out_of_board flag value.
+ * @brief Gets outOfBoard flag value.
  * @return Boolean value whether ball is out of play area, or not.
  */
 [[maybe_unused]] [[nodiscard]]
-bool Ball::outOfBoard() const
+bool Ball::isOutOfBoard() const
 {
-	return out_of_board;
+	return outOfBoard;
 }
 
 /**
@@ -138,9 +138,9 @@ void Ball::update()
 {
 	body.move(velocity);
 
-	if (getDown() > Game::play_area_height - Paddle::body_height / 6)
+	if (getDown() > Game::PLAY_AREA_HEIGHT - Paddle::BODY_HEIGHT / 6)
 	{
-		out_of_board = true;
+		outOfBoard = true;
 		velocity = { 0.0f, 0.0f };
 	}
 }
@@ -162,14 +162,14 @@ void Ball::bounceY()
 }
 
 /**
- * @brief Re-initializes ball position, velocity and out_of_board flag.
- * 	      Used when restaring game.
+ * @brief Re-initializes ball position, velocity and outOfBoard flag.
+ * 	      Used when restarting game.
  * @param init_x Desired initial ball position in X-axis (default: 240.0f).
  * @param init_y Desired initial ball position in Y-axis (default: 350.0f).
  */
 void Ball::reInitialize()
 {
-	body.setPosition(randomizePosition(min_x, max_x, min_y, max_y));
-	out_of_board = false;
-	velocity = { init_x_velocity, init_y_velocity };
+	body.setPosition(randomizePosition(minX, maxX, minY, maxY));
+	outOfBoard = false;
+	velocity = { INITIAL_VELOCITY_X, INITIAL_VELOCITY_Y };
 }

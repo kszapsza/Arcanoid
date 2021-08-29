@@ -5,10 +5,10 @@
 #include "block_collider.hpp"
 
 BlockCollider::BlockCollider(AssetsManager& assets, Ball& ball, std::vector<std::unique_ptr<Block>>& blocks)
-		:ball(ball), blocks(blocks)
+		: ball(ball), blocks(blocks)
 {
-	collision_sound_buffer = assets.getSound("..\\assets\\block_destroyed.wav");
-	collision_sound.setBuffer(collision_sound_buffer);
+	collisionSoundBuffer = assets.getSound("..\\assets\\block_destroyed.wav");
+	collisionSound.setBuffer(collisionSoundBuffer);
 }
 
 /**
@@ -25,7 +25,7 @@ bool BlockCollider::checkForCollision()
 		{
 			ball.bounceY();
 			blocks.erase(it);
-			collision_sound.play();
+			collisionSound.play();
 			return true;
 		}
 	}

@@ -6,7 +6,7 @@ A classic Arkanoid-like 2D game made with C++ and SFML framework.
 > ⚠ After successful build, before running the game, include SFML 2.5.1 DLLs in executable's directory!
 
 **🧱 Customizing levels:**
-Now game consists of several levels that can be easily created and modified. File named `levels.dat`  in `assets` directory allows you to create new levels block arrangement. Letters stand for blocks colors (e.g. `M` stands for magenta) and `.` means empty space. Lines preceded by `#` are comments and are ignored. **Important:** in order to parse successfully, last line of data has to be a comment.
+Now game consists of several levels that can be easily created and modified. File named `levels.dat`  in `assets` directory allows you to create new levels block arrangement. Letters stand for blocks colors (e.g. `M` stands for MAGENTA) and `.` means empty space. Lines preceded by `#` are comments and are ignored. **Important:** in order to parse successfully, last line of data has to be a comment.
 
 **🎮 Controls:**
 Move paddle with `[A]`/`[D]` or `[<-]`/`[->]` keys, restart after win or lose with `[Space]` key, ragequit from the game anytime using `[Esc]` 😁

@@ -22,8 +22,8 @@ private:
 	Ball& ball;
 	std::vector<std::unique_ptr<Block>>& blocks;
 
-	sf::SoundBuffer collision_sound_buffer;
-	sf::Sound collision_sound;
+	sf::SoundBuffer collisionSoundBuffer;
+	sf::Sound collisionSound;
 
 public:
 	BlockCollider(AssetsManager& assets, Ball& ball, std::vector<std::unique_ptr<Block>>& blocks);

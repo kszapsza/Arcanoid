@@ -9,12 +9,12 @@
  */
 Paddle::Paddle()
 {
-	body = sf::RectangleShape({ body_width, body_height });
+	body = sf::RectangleShape({ BODY_WIDTH, BODY_HEIGHT });
 	texture.loadFromFile("..\\assets\\objects.png");
 
 	body.setTexture(&texture);
 	body.setTextureRect(sf::IntRect(184.0f, 112.0f, 96.0f, 24.0f));
-	body.setOrigin(body_width / 2, body_height / 2);
+	body.setOrigin(BODY_WIDTH / 2, BODY_HEIGHT / 2);
 	body.setPosition(256.0f, 688.0f);
 }
 
@@ -25,7 +25,7 @@ void Paddle::moveLeft()
 {
 	if (getLeft() > 0)
 	{
-		body.move(-move_offset, 0.0f);
+		body.move(-moveOffset, 0.0f);
 	}
 }
 
@@ -36,7 +36,7 @@ void Paddle::moveRight()
 {
 	if (getRight() < 480)
 	{
-		body.move(move_offset, 0.0f);
+		body.move(moveOffset, 0.0f);
 	}
 }
 
@@ -67,7 +67,7 @@ const sf::Vector2f& Paddle::getPosition() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getUp() const
 {
-	return body.getPosition().y + Paddle::body_height / 2;
+	return body.getPosition().y + Paddle::BODY_HEIGHT / 2;
 }
 
 /**
@@ -77,7 +77,7 @@ float Paddle::getUp() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getLeft() const
 {
-	return body.getPosition().x - Paddle::body_width / 2;
+	return body.getPosition().x - Paddle::BODY_WIDTH / 2;
 }
 
 /**
@@ -87,7 +87,7 @@ float Paddle::getLeft() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getDown() const
 {
-	return body.getPosition().y - Paddle::body_height / 2;
+	return body.getPosition().y - Paddle::BODY_HEIGHT / 2;
 }
 
 /**
@@ -97,7 +97,7 @@ float Paddle::getDown() const
 [[maybe_unused]] [[nodiscard]]
 float Paddle::getRight() const
 {
-	return body.getPosition().x + Paddle::body_width / 2;
+	return body.getPosition().x + Paddle::BODY_WIDTH / 2;
 }
 
 /**
@@ -120,13 +120,13 @@ sf::FloatRect Paddle::getGlobalBounds() const
 void Paddle::update()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		moveLeft();
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)
-		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		moveRight();
 	}
@@ -134,10 +134,10 @@ void Paddle::update()
 
 /**
  * @brief Re-initializes paddle position.
- * @param init_x Desired initial ball position in X-axis (default: 256.0f).
- * @param init_y Desired initial ball position in Y-axis (default: 688.0f).
+ * @param initX Desired initial ball position in X-axis (default: 256.0f).
+ * @param initY Desired initial ball position in Y-axis (default: 688.0f).
  */
-void Paddle::reInitialize(const float init_x, const float init_y)
+void Paddle::reInitialize(const float initX, const float initY)
 {
-	body.setPosition(init_x, init_y);
+	body.setPosition(initX, initY);
 }

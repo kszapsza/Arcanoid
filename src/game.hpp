@@ -32,10 +32,10 @@ enum class GameState : std::uint8_t
 /**
  * @brief Main game class, storing key game data and objects.
  *
- * This class intializes and handles game window, assets manager
+ * This class initializes and handles game window, assets manager
  * and all essential game elements, such as: ball, paddle,
- * vector of blocks pointers, neccessary texture references,
- * collission classes and game over/won booleans.
+ * vector of blocks pointers, necessary texture references,
+ * collision classes and game over/won booleans.
  */
 class Game
 {
@@ -45,53 +45,53 @@ private:
 	Ball ball;
 	Paddle paddle;
 
-	LevelsManager levels_manager{ assets };
+	LevelsManager levelsManager{ assets };
 
-	GameState game_state;
+	GameState gameState;
 
-	// COLLISSION CLASSES
+	// COLLISION CLASSES
 
-	PaddleCollider paddle_collider{ assets, ball, paddle };
-	BlockCollider block_collider{ assets, ball, levels_manager.blocks };
-	WallsCollider walls_collider{ assets, ball, *this };
+	PaddleCollider paddleCollider{ assets, ball, paddle };
+	BlockCollider blockCollider{ assets, ball, levelsManager.blocks };
+	WallsCollider wallsCollider{ assets, ball, *this };
 
 	// TEXTURES
 
 	sf::Image icon;
-	sf::Font karmatic_arcade;
+	sf::Font karmaticArcade;
 
-	sf::Texture splashscreen_texture;
-	sf::Texture window_bg_texture;
+	sf::Texture splashscreenTexture;
+	sf::Texture windowBackgroundTexture;
 
-	sf::Texture level_completed_texture;
-	sf::Texture game_over_texture;
-	sf::Texture game_won_texture;
+	sf::Texture levelCompletedTexture;
+	sf::Texture gameOverTexture;
+	sf::Texture gameWonTexture;
 
 	// SPRITES
 
 	sf::Sprite splashscreen;
-	sf::Sprite window_bg;
+	sf::Sprite windowBackground;
 
-	sf::Sprite level_completed_info;
-	sf::Sprite game_over_info;
-	sf::Sprite game_won_info;
+	sf::Sprite levelCompletedInfo;
+	sf::Sprite gameOverInfo;
+	sf::Sprite gameWonInfo;
 
 	// USER INTERFACE
 
-	Scoreboard scoreboard{ karmatic_arcade, window_width };
-	MessageBox new_highscore{ karmatic_arcade };
+	Scoreboard scoreboard{ karmaticArcade, WINDOW_WIDTH };
+	MessageBox newHighscore{ karmaticArcade };
 
 	// SOUND BUFFERS AND SOUNDS
 
-	sf::SoundBuffer game_over_sound_buffer;
-	sf::SoundBuffer game_won_sound_buffer;
+	sf::SoundBuffer gameOverSoundBuffer;
+	sf::SoundBuffer gameWonSoundBuffer;
 
-	sf::Sound game_over_sound;
-	sf::Sound game_won_sound;
+	sf::Sound gameOverSound;
+	sf::Sound gameWonSound;
 
 	// GAME DATA
 
-	unsigned int previous_attempt_highscore{};
+	unsigned int previousAttemptHighscore{};
 
 	unsigned int score{};
 	unsigned int highscore{};
@@ -99,7 +99,7 @@ private:
 	unsigned int level{};
 
 	// Needed to play game over/won sound effect only once in update() loop...
-	bool game_result_sound_played{ false };
+	bool gameResultSoundPlayed{ false };
 
 	void levelCompleted();
 	void gameLost();
@@ -110,11 +110,11 @@ private:
 public:
 	sf::RenderWindow window;
 
-	[[maybe_unused]] static constexpr unsigned int window_width = 480;
-	[[maybe_unused]] static constexpr unsigned int window_height = 780;
+	[[maybe_unused]] static constexpr unsigned int WINDOW_WIDTH = 480;
+	[[maybe_unused]] static constexpr unsigned int WINDOW_HEIGHT = 780;
 
-	[[maybe_unused]] static constexpr unsigned int play_area_width = 480;
-	[[maybe_unused]] static constexpr unsigned int play_area_height = 700;
+	[[maybe_unused]] static constexpr unsigned int PLAY_AREA_WIDTH = 480;
+	[[maybe_unused]] static constexpr unsigned int PLAY_AREA_HEIGHT = 700;
 
 	Game();
 

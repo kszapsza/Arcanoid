@@ -21,11 +21,11 @@ private:
 	Ball& ball;
 	Paddle& paddle;
 
-	sf::SoundBuffer collision_sound_buffer;
-	sf::Sound collision_sound;
+	sf::SoundBuffer collisionSoundBuffer;
+	sf::Sound collisionSound;
 
 	// Flag that will make ball bounce up only once per single paddle/ball collision.
-	bool did_bounce{ false };
+	bool didBounce{ false };
 
 public:
 	PaddleCollider(AssetsManager& assets, Ball& ball, Paddle& paddle);
